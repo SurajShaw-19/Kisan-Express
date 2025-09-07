@@ -1,0 +1,427 @@
+/** @import must precede all other statements */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * Tailwind CSS theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    --background: 43 34% 98%;
+    --foreground: 155 100% 8%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 155 100% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 155 100% 8%;
+
+    --primary: 142 69% 25%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 60 9% 88%;
+    --secondary-foreground: 155 100% 8%;
+
+    --muted: 60 9% 88%;
+    --muted-foreground: 155 20% 40%;
+
+    --accent: 43 65% 85%;
+    --accent-foreground: 155 100% 8%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 43 34% 88%;
+    --input: 43 34% 88%;
+    --ring: 142 69% 25%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 43 34% 96%;
+    --sidebar-foreground: 155 100% 8%;
+    --sidebar-primary: 142 69% 25%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 43 65% 85%;
+    --sidebar-accent-foreground: 155 100% 8%;
+    --sidebar-border: 43 34% 88%;
+    --sidebar-ring: 142 69% 25%;
+
+    /* Earthy agricultural color palette */
+    --earth-50: 33 43% 96%;
+    --earth-100: 33 43% 91%;
+    --earth-200: 33 43% 82%;
+    --earth-300: 33 43% 69%;
+    --earth-400: 33 43% 52%;
+    --earth-500: 33 43% 39%;
+    --earth-600: 33 43% 31%;
+    --earth-700: 33 43% 24%;
+    --earth-800: 33 43% 20%;
+    --earth-900: 33 43% 16%;
+
+    /* Forest green palette */
+    --forest-50: 155 60% 95%;
+    --forest-100: 155 60% 88%;
+    --forest-200: 155 60% 76%;
+    --forest-300: 155 60% 61%;
+    --forest-400: 155 60% 44%;
+    --forest-500: 155 69% 25%;
+    --forest-600: 155 69% 20%;
+    --forest-700: 155 69% 16%;
+    --forest-800: 155 69% 13%;
+    --forest-900: 155 69% 10%;
+
+    /* Harvest gold palette */
+    --harvest-50: 43 100% 96%;
+    --harvest-100: 43 100% 90%;
+    --harvest-200: 43 100% 80%;
+    --harvest-300: 43 100% 66%;
+    --harvest-400: 43 90% 48%;
+    --harvest-500: 43 90% 38%;
+    --harvest-600: 43 90% 30%;
+    --harvest-700: 43 90% 23%;
+    --harvest-800: 43 90% 19%;
+    --harvest-900: 43 90% 15%;
+
+    /* Wheat yellow palette */
+    --wheat-50: 52 100% 96%;
+    --wheat-100: 52 100% 90%;
+    --wheat-200: 52 100% 80%;
+    --wheat-300: 52 100% 66%;
+    --wheat-400: 52 90% 52%;
+    --wheat-500: 52 90% 42%;
+    --wheat-600: 52 90% 34%;
+    --wheat-700: 52 90% 26%;
+    --wheat-800: 52 90% 22%;
+    --wheat-900: 52 90% 18%;
+  }
+
+  .dark {
+    --background: 155 69% 4%;
+    --foreground: 43 34% 96%;
+
+    --card: 155 69% 6%;
+    --card-foreground: 43 34% 96%;
+
+    --popover: 155 69% 6%;
+    --popover-foreground: 43 34% 96%;
+
+    --primary: 155 60% 76%;
+    --primary-foreground: 155 69% 10%;
+
+    --secondary: 33 43% 16%;
+    --secondary-foreground: 43 34% 96%;
+
+    --muted: 33 43% 16%;
+    --muted-foreground: 43 34% 70%;
+
+    --accent: 33 43% 16%;
+    --accent-foreground: 43 34% 96%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 33 43% 16%;
+    --input: 33 43% 16%;
+    --ring: 155 60% 76%;
+    --sidebar-background: 155 69% 6%;
+    --sidebar-foreground: 43 34% 96%;
+    --sidebar-primary: 155 60% 76%;
+    --sidebar-primary-foreground: 155 69% 10%;
+    --sidebar-accent: 33 43% 16%;
+    --sidebar-accent-foreground: 43 34% 96%;
+    --sidebar-border: 33 43% 16%;
+    --sidebar-ring: 155 60% 76%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Grid background pattern (green variant) */
+  .grid-bg-green {
+    background-image: url('https://cdn.builder.io/api/v1/image/assets%2Fe4d9b4c321534c40bd6f6f346837f286%2F9614450818d140cb9420ab0df1bf56ce?format=webp&width=800');
+    background-repeat: repeat;
+    background-size: 120px 120px;
+    background-position: center;
+    background-color: rgba(16,185,129,0.03);
+    background-blend-mode: overlay;
+  }
+
+  /* Stronger green overlay modifier (use on container with position:relative) */
+  .grid-bg-green-strong::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(5,150,105,0.06));
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+
+  /* Utility wrapper for hero sections using the grid background */
+  .bg-grid-hero {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bg-grid-hero > * {
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Login & Signup page backgrounds */
+  .page-bg-login, .page-bg-signup {
+    position: relative;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .page-bg-login::before, .page-bg-signup::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(6,95,70,0.16), rgba(16,185,129,0.06));
+    z-index: 0;
+  }
+
+  /* Specific images */
+  .page-bg-login {
+    background-image: url('https://image.shutterstock.com/image-photo/lush-rice-paddy-field-neat-600nw-2499404003.jpg');
+  }
+
+  .page-bg-signup {
+    background-image: url('https://image.shutterstock.com/image-photo/lush-rice-paddy-field-neat-600nw-2499404003.jpg');
+  }
+
+  /* Ensure content sits above overlays */
+  .page-bg-login > *, .page-bg-signup > * {
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Global animations and utility classes */
+  @keyframes pageFade {
+    0% { opacity: 0; transform: translateY(8px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes popIn {
+    0% { opacity: 0; transform: scale(0.98) translateY(6px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  @keyframes slideDown {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideUp {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes floaty {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+    100% { transform: translateY(0); }
+  }
+
+  /* Respect user's motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-page-fade,
+    .animate-pop-in,
+    .animate-slide-down,
+    .animate-slide-up,
+    .animate-floaty {
+      animation: none !important;
+    }
+  }
+
+  .animate-page-fade {
+    animation: pageFade 420ms cubic-bezier(.16,.84,.44,1) both;
+  }
+
+  .animate-content-fade {
+    animation: pageFade 520ms cubic-bezier(.16,.84,.44,1) both;
+  }
+
+  .animate-pop-in {
+    animation: popIn 420ms cubic-bezier(.2,.9,.3,1) both;
+    transform-origin: center;
+  }
+
+  .animate-slide-down {
+    animation: slideDown 480ms cubic-bezier(.16,.84,.44,1) both;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 480ms cubic-bezier(.16,.84,.44,1) both;
+  }
+
+  .animate-floaty {
+    animation: floaty 4s ease-in-out infinite;
+  }
+
+  /* Stagger helper - adds slight delay per child when used with inline style --stagger-index */
+  .stagger-container > * {
+    opacity: 0;
+    transform: translateY(6px);
+    animation: pageFade 420ms cubic-bezier(.16,.84,.44,1) both;
+    animation-delay: calc(var(--stagger-index, 0) * 60ms);
+  }
+
+  /* Button shimmer effect for primary buttons */
+  .btn-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-shimmer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0) 100%);
+    transform: translateX(-120%);
+    transition: transform 650ms cubic-bezier(.2,.9,.3,1);
+    pointer-events: none;
+  }
+
+  .btn-shimmer:hover::after {
+    transform: translateX(120%);
+  }
+
+  /* Small utility to add subtle entrance to cards/lists */
+  .card-entrance > * {
+    opacity: 0;
+    transform: translateY(6px);
+    animation: popIn 420ms cubic-bezier(.2,.9,.3,1) both;
+  }
+
+  /* New interactive animations */
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .animated-gradient-bg {
+    background: linear-gradient(270deg, rgba(16,185,129,0.06) 0%, rgba(99,102,241,0.04) 25%, rgba(250,204,21,0.04) 50%, rgba(16,185,129,0.06) 75%);
+    background-size: 800% 800%;
+    animation: gradientShift 12s ease infinite;
+  }
+
+  .animated-gradient-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.35);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+  @keyframes heroPop {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    30% { transform: translateY(-8px) scale(1.04); }
+    60% { transform: translateY(4px) scale(0.98); }
+    100% { transform: translateY(0) scale(1); }
+  }
+
+  .animate-hero-pop {
+    animation: heroPop 800ms cubic-bezier(.2,.9,.3,1) both;
+    transform-origin: center;
+  }
+
+  @keyframes logoPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes iconWobble {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-6deg); }
+    50% { transform: rotate(6deg); }
+    75% { transform: rotate(-4deg); }
+    100% { transform: rotate(0deg); }
+  }
+
+  @keyframes sweep {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* Logo subtle pulse (used on header and footer logos) */
+  .logo-pulse {
+    animation: logoPulse 4.5s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  /* Nav icon hover wobble */
+  .nav-icon-hover:hover {
+    animation: iconWobble 600ms ease-in-out both;
+  }
+
+  /* Link underline sweep */
+  .link-underline-anim {
+    position: relative;
+    overflow: hidden;
+  }
+  .link-underline-anim::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.6), rgba(255,255,255,0));
+    transform: translateX(-100%);
+    transition: transform 420ms cubic-bezier(.2,.9,.3,1);
+  }
+  .link-underline-anim:hover::after {
+    transform: translateX(0);
+  }
+
+  /* Input focus glow */
+  .input-glow:focus-within {
+    box-shadow: 0 8px 24px rgba(6,95,70,0.06), 0 0 0 6px rgba(16,185,129,0.06);
+    border-radius: 8px;
+    transition: box-shadow 240ms ease-in-out;
+  }
+
+  /* Card tilt on hover */
+  .card-tilt {
+    transition: transform 260ms cubic-bezier(.2,.9,.3,1), box-shadow 260ms;
+    transform-origin: center;
+  }
+  .card-tilt:hover {
+    transform: perspective(800px) rotateX(1.2deg) rotateY(-1deg) translateY(-6px);
+    box-shadow: 0 18px 40px rgba(2,6,23,0.12);
+  }
+
+  /* Fade-in-up utility for larger sections */
+  .fade-in-up {
+    animation: popIn 560ms cubic-bezier(.2,.9,.3,1) both;
+  }
+
+  /* Stagger fallback for up to 8 children */
+  .stagger-container > *:nth-child(1){ animation-delay: 40ms }
+  .stagger-container > *:nth-child(2){ animation-delay: 100ms }
+  .stagger-container > *:nth-child(3){ animation-delay: 160ms }
+  .stagger-container > *:nth-child(4){ animation-delay: 220ms }
+  .stagger-container > *:nth-child(5){ animation-delay: 280ms }
+  .stagger-container > *:nth-child(6){ animation-delay: 340ms }
+  .stagger-container > *:nth-child(7){ animation-delay: 400ms }
+  .stagger-container > *:nth-child(8){ animation-delay: 460ms }
+
+}
