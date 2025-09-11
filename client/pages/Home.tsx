@@ -8,11 +8,11 @@ import {
   FileText,
   Leaf,
   Users,
-  CheckCircle,
   ArrowRight,
   Phone,
   Camera,
   Mic,
+  CheckCircle,
   TrendingUp,
   Shield,
   Clock,
@@ -20,6 +20,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import FarmerAnimation from "@/components/FarmerAnimation";
+import { useAuthStore } from "@/store/authStore";
 
 // Load local Lottie JSON animations if present
 let farmerAnimation: any = null;
@@ -41,6 +42,7 @@ try {
 const Home = () => {
   const [animate, setAnimate] = useState(false);
   const location = useLocation();
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
   useEffect(() => {
     try {
@@ -48,14 +50,12 @@ const Home = () => {
       if (state && state.animateHero) {
         setAnimate(true);
         const t = setTimeout(() => setAnimate(false), 900);
-        // clear history state so it doesn't retrigger on refresh
         try { window.history.replaceState({}, document.title, window.location.pathname); } catch (err) {}
         return () => clearTimeout(t);
       }
-    } catch (err) {
-      // ignore
-    }
+    } catch (err) {}
   }, [location]);
+
   const features = [
     {
       icon: MessageSquare,
@@ -123,7 +123,7 @@ const Home = () => {
     <div className="min-h-full">
       {/* Hero Section */}
       <section className="relative overflow-hidden py-12 lg:py-20 bg-cover bg-center" style={{ backgroundImage: "url('https://www.agrifarming.in/wp-content/uploads/Digital-Agriculture-in-India1.jpg')" }}>
-      <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 bg-black/30"></div>
         <div className="container px-4 mx-auto relative z-10">
           <div className="max-w-5xl mx-auto text-center">
             <Badge variant="secondary" className="mb-8 bg-white/80 backdrop-blur-sm text-green-800 hover:bg-white border border-green-200 shadow-lg px-6 py-2 text-base">
@@ -175,7 +175,42 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Ask Questions Your Way (moved above Features) */}
+      <section className="py-12 bg-muted/30">
+        <div className="container px-4 mx-auto">
+          <div className="max-w-5xl mx-auto rounded-2xl border-2 border-emerald-600 bg-white/80 shadow-2xl p-6 md:p-10">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-3">Ask Questions Your Way</h2>
+              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">Use Text, Image, or Voice — whichever is easiest for you.</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto">
+              {queryTypes.map((type, index) => (
+                <div key={index} className="text-center group rounded-xl border border-emerald-200 bg-emerald-50/60 p-6 md:p-8 hover:bg-emerald-50 transition-colors">
+                  <div className="w-24 h-24 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow">
+                    <type.icon className="w-12 h-12 text-emerald-700" />
+                  </div>
+                  {type.animation ? (
+                    <FarmerAnimation className="h-28 mx-auto mb-4" />
+                  ) : (
+                    <div className="h-28 mx-auto mb-4" />
+                  )}
+                  <h3 className="text-2xl font-semibold mb-2 text-emerald-900">{type.title}</h3>
+                  <p className="text-base md:text-lg text-emerald-800/80">{type.description}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center mt-10">
+              <Button size="lg" asChild className="bg-emerald-600 hover:bg-emerald-700 text-white">
+                <Link to="/query">Start Asking Questions<ArrowRight className="w-4 h-4 ml-2" /></Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section (moved below Query Types) */}
       <section className="py-12 bg-gradient-to-b from-background to-gray-50/30">
         <div className="container px-4 mx-auto">
           <div className="text-center mb-20">
@@ -208,39 +243,6 @@ const Home = () => {
                 </CardContent>
               </Card>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Query Types Section */}
-      <section className="py-10 bg-muted/30">
-        <div className="container px-4 mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">Ask Questions Your Way</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Choose the most convenient method to get agricultural advice</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {queryTypes.map((type, index) => (
-              <div key={index} className="text-center group">
-                <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-slate-200 transition-colors">
-                  <type.icon className="w-10 h-10 text-slate-700" />
-                </div>
-                {type.animation ? (
-                  <FarmerAnimation className="h-28 mx-auto mb-4" />
-                ) : (
-                  <div className="h-28 mx-auto mb-4" />
-                )}
-                <h3 className="text-xl font-semibold mb-3">{type.title}</h3>
-                <p className="text-muted-foreground">{type.description}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Button size="lg" asChild className="bg-slate-600 hover:bg-slate-700">
-              <Link to="/query">Start Asking Questions<ArrowRight className="w-4 h-4 ml-2" /></Link>
-            </Button>
           </div>
         </div>
       </section>
@@ -314,12 +316,16 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-12 bg-gradient-to-r from-slate-600 to-slate-700 text-white">
+      {/* CTA Section - shrink height after login */}
+      <section className={`${isAuthenticated ? 'py-8' : 'py-12 lg:py-16'} bg-gradient-to-r from-slate-600 to-slate-700 text-white`}>
         <div className="container px-4 mx-auto text-center">
-          {plantAnimation ? <FarmerAnimation className="h-36 mx-auto mb-6" /> : <div className="h-36 mx-auto mb-6" />}
-          <h2 className="text-3xl lg:text-4xl font-bold mb-6">Ready to Transform Your Farming?</h2>
-          <p className="text-xl mb-8 text-muted-foreground max-w-2xl mx-auto">Join thousands of farmers who are already benefiting from AI-powered agricultural advice.</p>
+          {plantAnimation ? (
+            <FarmerAnimation className={`${isAuthenticated ? 'h-20' : 'h-36'} mx-auto mb-6`} />
+          ) : (
+            <div className={`${isAuthenticated ? 'h-20' : 'h-36'} mx-auto mb-6`} />
+          )}
+          <h2 className={`${isAuthenticated ? 'text-2xl lg:text-3xl' : 'text-3xl lg:text-4xl'} font-bold mb-4`}>Ready to Transform Your Farming?</h2>
+          <p className={`${isAuthenticated ? 'text-lg' : 'text-xl'} mb-8 text-muted-foreground max-w-2xl mx-auto`}>Join thousands of farmers who are already benefiting from AI-powered agricultural advice.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild className="bg-white text-slate-700 hover:bg-slate-50">
               <Link to="/query">
