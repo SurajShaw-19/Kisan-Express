@@ -16,6 +16,8 @@ import {
   TrendingUp,
   Shield,
   Clock,
+  ChevronRight,
+  ChevronLeft,
 } from "lucide-react";
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -43,6 +45,8 @@ const Home = () => {
   const [animate, setAnimate] = useState(false);
   const location = useLocation();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const user = useAuthStore((s) => s.user);
+  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
     try {
@@ -88,6 +92,25 @@ const Home = () => {
       href: "/about",
       color: "bg-teal-100 text-teal-700",
       animation: farmerAnimation,
+    },
+  ];
+
+  const additionalFeatures = [
+    {
+      icon: ChevronRight,
+      title: "Training Programs",
+      description: `See currently happening training programs in ${user?.location?.state || 'your area'}.`,
+      href: "/training-programs",
+      color: "bg-yellow-100 text-yellow-700",
+      animation: null,
+    },
+    {
+      icon: Leaf,
+      title: "Organic Farming",
+      description: "Learn about organic farming practices and resources.",
+      href: "/organic",
+      color: "bg-amber-100 text-amber-700",
+      animation: null,
     },
   ];
 
@@ -163,8 +186,8 @@ const Home = () => {
             {/* Stats */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
               {stats.map((stat, index) => (
-                <div key={index} className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/30 shadow-lg hover:shadow-xl transition-all hover:scale-105 group">
-                  <div className="text-3xl lg:text-4xl font-bold text-foreground mb-2">
+                <div key={index} className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 border border-white/30 shadow-md hover:shadow-xl transition-all hover:scale-105 group">
+                  <div className="text-2xl lg:text-3xl font-bold text-foreground mb-1">
                     {stat.number}
                   </div>
                   <div className="text-sm font-medium text-slate-600/80">{stat.label}</div>
@@ -176,32 +199,32 @@ const Home = () => {
       </section>
 
       {/* Ask Questions Your Way (moved above Features) */}
-      <section className="py-12 bg-muted/30">
+      <section className="py-10 bg-muted/30">
         <div className="container px-4 mx-auto">
-          <div className="max-w-5xl mx-auto rounded-2xl border-2 border-emerald-600 bg-white/80 shadow-2xl p-6 md:p-10">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-3">Ask Questions Your Way</h2>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">Use Text, Image, or Voice — whichever is easiest for you.</p>
+          <div className="max-w-5xl mx-auto rounded-2xl border-2 border-emerald-600 bg-white/90 shadow-2xl p-6 md:p-8">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-2">Ask Questions Your Way</h2>
+              <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto">Use Text, Image, or Voice — whichever is easiest for you.</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
               {queryTypes.map((type, index) => (
-                <div key={index} className="text-center group rounded-xl border border-emerald-200 bg-emerald-50/60 p-6 md:p-8 hover:bg-emerald-50 transition-colors">
-                  <div className="w-24 h-24 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow">
-                    <type.icon className="w-12 h-12 text-emerald-700" />
+                <div key={index} className="text-center group rounded-lg border border-emerald-200 bg-emerald-50/70 p-4 md:p-6 hover:bg-emerald-50 transition-colors">
+                  <div className="w-20 h-20 bg-white rounded-xl flex items-center justify-center mx-auto mb-4 shadow">
+                    <type.icon className="w-10 h-10 text-emerald-700" />
                   </div>
                   {type.animation ? (
-                    <FarmerAnimation className="h-28 mx-auto mb-4" />
+                    <FarmerAnimation className="h-20 mx-auto mb-3" />
                   ) : (
-                    <div className="h-28 mx-auto mb-4" />
+                    <div className="h-20 mx-auto mb-3" />
                   )}
-                  <h3 className="text-2xl font-semibold mb-2 text-emerald-900">{type.title}</h3>
-                  <p className="text-base md:text-lg text-emerald-800/80">{type.description}</p>
+                  <h3 className="text-xl font-semibold mb-1 text-emerald-900">{type.title}</h3>
+                  <p className="text-sm md:text-base text-emerald-800/80">{type.description}</p>
                 </div>
               ))}
             </div>
 
-            <div className="text-center mt-10">
+            <div className="text-center mt-8">
               <Button size="lg" asChild className="bg-emerald-600 hover:bg-emerald-700 text-white">
                 <Link to="/query">Start Asking Questions<ArrowRight className="w-4 h-4 ml-2" /></Link>
               </Button>
@@ -211,56 +234,89 @@ const Home = () => {
       </section>
 
       {/* Features Section (moved below Query Types) */}
-      <section className="py-12 bg-gradient-to-b from-background to-gray-50/30">
+      <section className="py-12">
         <div className="container px-4 mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-foreground">Everything You Need for Modern Farming</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">Access comprehensive agricultural services designed specifically for Indian farmers</p>
-          </div>
+          <div className="max-w-6xl mx-auto rounded-2xl bg-white/90 border border-gray-200 p-6 md:p-8 shadow-sm">
+            <div className="text-center mb-6">
+              <h2 className="text-3xl lg:text-4xl font-bold mb-3 text-foreground">Everything You Need for Modern Farming</h2>
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">Access comprehensive agricultural services designed specifically for Indian farmers</p>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <Card key={index} className="group hover:shadow-2xl transition-all duration-500 border-0 bg-white/80 backdrop-blur-sm overflow-hidden hover:scale-105 hover:-translate-y-2">
-                <CardHeader className="text-center pb-4 bg-gradient-to-br from-white to-gray-50/30">
-                  <div className={`w-18 h-18 rounded-3xl ${feature.color} flex items-center justify-center mx-auto mb-6`}>
-                    <feature.icon className="w-10 h-10" />
-                  </div>
-                  <CardTitle className="text-xl mb-3 group-hover:text-slate-700 transition-colors">{feature.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="text-center p-6">
-                  <CardDescription className="mb-6 text-base leading-relaxed">{feature.description}</CardDescription>
-                  {feature.animation ? (
-                    <FarmerAnimation className="h-32 mx-auto mb-4" />
-                  ) : (
-                    <div className="h-32 mx-auto mb-4" />
-                  )}
-                  <Button variant="ghost" size="sm" asChild className="group/btn hover:bg-slate-50 transition-all">
-                    <Link to={feature.href}>
-                      Get Started
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {features.map((feature, index) => (
+                <Card key={index} className="group hover:shadow-xl transition-all duration-300 border border-gray-100 bg-white/80 overflow-hidden rounded-lg">
+                  <CardHeader className="text-center pb-3 bg-transparent">
+                    <div className={`w-14 h-14 rounded-xl ${feature.color} flex items-center justify-center mx-auto mb-4`}>
+                      <feature.icon className="w-8 h-8" />
+                    </div>
+                    <CardTitle className="text-lg mb-2 group-hover:text-slate-700 transition-colors">{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="text-center p-4">
+                    <CardDescription className="mb-3 text-sm leading-relaxed">{feature.description}</CardDescription>
+                    {feature.animation ? (
+                      <FarmerAnimation className="h-24 mx-auto mb-3" />
+                    ) : (
+                      <div className="h-24 mx-auto mb-3" />
+                    )}
+                    <Button variant="ghost" size="sm" asChild className="group/btn hover:bg-slate-50 transition-all">
+                      <Link to={feature.href}>
+                        Get Started
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                      </Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+
+              {/* Expand toggle card shown when authenticated */}
+              {isAuthenticated && (
+                <div className="flex items-center justify-center">
+                  <button onClick={() => setShowMore((s) => !s)} aria-label="toggle more" className="flex items-center justify-center w-20 h-20 bg-white rounded-lg border border-gray-200 shadow hover:shadow-md transition">
+                    {showMore ? <ChevronLeft className="w-6 h-6 text-forest-600" /> : <ChevronRight className="w-6 h-6 text-forest-600" />}
+                  </button>
+                </div>
+              )}
+
+              {/* Additional features revealed */}
+              {isAuthenticated && showMore && additionalFeatures.map((feature, idx) => (
+                <Card key={`more-${idx}`} className="group hover:shadow-xl transition-all duration-300 border border-gray-100 bg-white/80 overflow-hidden rounded-lg">
+                  <CardHeader className="text-center pb-3 bg-transparent">
+                    <div className={`w-14 h-14 rounded-xl ${feature.color} flex items-center justify-center mx-auto mb-4`}>
+                      <feature.icon className="w-8 h-8" />
+                    </div>
+                    <CardTitle className="text-lg mb-2 group-hover:text-slate-700 transition-colors">{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="text-center p-4">
+                    <CardDescription className="mb-3 text-sm leading-relaxed">{feature.description}</CardDescription>
+                    <div className="h-24 mx-auto mb-3" />
+                    <Button variant="ghost" size="sm" asChild className="group/btn hover:bg-slate-50 transition-all">
+                      <Link to={feature.href}>
+                        Learn More
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                      </Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Benefits Section */}
-      <section className="py-12 bg-background">
+      <section className="py-10 bg-background">
         <div className="container px-4 mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
-              <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-6">Why Choose Kisan Express?</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-4">Why Choose Kisan Express?</h2>
 
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <div className="flex items-start space-x-4">
                   <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                     <CheckCircle className="w-5 h-5 text-slate-700" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2">Expert Agricultural Advice</h3>
+                    <h3 className="font-semibold mb-1">Expert Agricultural Advice</h3>
                     <p className="text-muted-foreground">Get answers from certified agricultural experts and AI-powered analysis.</p>
                   </div>
                 </div>
@@ -270,7 +326,7 @@ const Home = () => {
                     <TrendingUp className="w-5 h-5 text-slate-700" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2">Real-time Monitoring</h3>
+                    <h3 className="font-semibold mb-1">Real-time Monitoring</h3>
                     <p className="text-muted-foreground">Stay updated with weather conditions, market prices, and crop health alerts.</p>
                   </div>
                 </div>
@@ -280,7 +336,7 @@ const Home = () => {
                     <Shield className="w-5 h-5 text-slate-700" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2">Government Scheme Access</h3>
+                    <h3 className="font-semibold mb-1">Government Scheme Access</h3>
                     <p className="text-muted-foreground">Discover and apply for subsidies, loans, and agricultural schemes easily.</p>
                   </div>
                 </div>
@@ -290,7 +346,7 @@ const Home = () => {
                     <Clock className="w-5 h-5 text-slate-700" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2">24/7 Availability</h3>
+                    <h3 className="font-semibold mb-1">24/7 Availability</h3>
                     <p className="text-muted-foreground">Get help anytime, anywhere with our always-available digital platform.</p>
                   </div>
                 </div>
@@ -298,17 +354,17 @@ const Home = () => {
             </div>
 
             <div className="relative">
-              <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 text-center">
+              <div className="bg-gradient-to-tr from-emerald-100 to-yellow-50 rounded-xl p-6 text-center border border-emerald-200 shadow-sm">
                 {farmerAnimation ? (
-                  <FarmerAnimation className="h-40 mx-auto mb-4" />
+                  <FarmerAnimation className="h-28 mx-auto mb-3" />
                 ) : (
-                  <div className="h-40 mx-auto mb-4" />
+                  <div className="h-28 mx-auto mb-3" />
                 )}
-                <div className="w-24 h-24 bg-slate-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Phone className="w-12 h-12 text-white" />
+                <div className="w-20 h-20 bg-forest-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Phone className="w-10 h-10 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold mb-4">Emergency Helpline</h3>
-                <p className="text-lg font-semibold text-slate-700 mb-2">1800-XXX-XXXX</p>
+                <h3 className="text-xl font-bold mb-2">Emergency Helpline</h3>
+                <p className="text-base font-semibold text-forest-800 mb-1">1800-XXX-XXXX</p>
                 <p className="text-muted-foreground">Available 24/7 for urgent agricultural queries</p>
               </div>
             </div>
@@ -317,15 +373,15 @@ const Home = () => {
       </section>
 
       {/* CTA Section - shrink height after login */}
-      <section className={`${isAuthenticated ? 'py-8' : 'py-12 lg:py-16'} bg-gradient-to-r from-slate-600 to-slate-700 text-white`}>
+      <section className={`${isAuthenticated ? 'py-6' : 'py-10 lg:py-12'} bg-gradient-to-r from-slate-600 to-slate-700 text-white`}>
         <div className="container px-4 mx-auto text-center">
           {plantAnimation ? (
-            <FarmerAnimation className={`${isAuthenticated ? 'h-20' : 'h-36'} mx-auto mb-6`} />
+            <FarmerAnimation className={`${isAuthenticated ? 'h-16' : 'h-28'} mx-auto mb-4`} />
           ) : (
-            <div className={`${isAuthenticated ? 'h-20' : 'h-36'} mx-auto mb-6`} />
+            <div className={`${isAuthenticated ? 'h-16' : 'h-28'} mx-auto mb-4`} />
           )}
-          <h2 className={`${isAuthenticated ? 'text-2xl lg:text-3xl' : 'text-3xl lg:text-4xl'} font-bold mb-4`}>Ready to Transform Your Farming?</h2>
-          <p className={`${isAuthenticated ? 'text-lg' : 'text-xl'} mb-8 text-muted-foreground max-w-2xl mx-auto`}>Join thousands of farmers who are already benefiting from AI-powered agricultural advice.</p>
+          <h2 className={`${isAuthenticated ? 'text-xl lg:text-2xl' : 'text-2xl lg:text-3xl'} font-bold mb-2 text-white`}>Ready to Transform Your Farming?</h2>
+          <p className={`${isAuthenticated ? 'text-base' : 'text-lg'} mb-6 text-white max-w-2xl mx-auto`}>Join thousands of farmers who are already benefiting from AI-powered agricultural advice.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild className="bg-white text-slate-700 hover:bg-slate-50">
               <Link to="/query">
