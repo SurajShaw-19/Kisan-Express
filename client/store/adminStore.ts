@@ -127,6 +127,29 @@ export const useAdminStore = create<AdminState>()(
           return users;
         },
 
+        // feedback methods
+        fetchFeedback: () => {
+          return get().feedback;
+        },
+
+        addFeedback: (fb) => {
+          const newFb: CustomerFeedback = {
+            id: `f_${Date.now()}`,
+            userId: fb.userId,
+            queryId: fb.queryId,
+            queryCategory: fb.queryCategory,
+            queryText: fb.queryText,
+            responseText: fb.responseText,
+            rating: fb.rating,
+            createdAt: new Date().toISOString(),
+          };
+          set((state) => ({ feedback: [newFb, ...state.feedback] }));
+        },
+
+        deleteFeedback: (id: string) => {
+          set((state) => ({ feedback: state.feedback.filter((f) => f.id !== id) }));
+        },
+
         getUserById: (id: string) => {
           return get().users.find((u) => u.id === id);
         },
