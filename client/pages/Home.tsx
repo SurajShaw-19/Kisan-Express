@@ -103,6 +103,14 @@ const Home = () => {
       animation: null,
     },
     {
+      icon: Phone,
+      title: "Customer Support",
+      description: "Get help with account, payments, and technical issues.",
+      href: "/customer-support",
+      color: "bg-indigo-100 text-indigo-700",
+      animation: null,
+    },
+    {
       icon: Users,
       title: "Community Support",
       description: "Connect with fellow farmers and agricultural officers for knowledge sharing.",
