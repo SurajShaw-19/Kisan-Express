@@ -91,6 +91,31 @@ export const useAdminStore = create<AdminState>()(
             createdAt: new Date().toISOString(),
           },
         ],
+
+        // mock customer feedback entries
+        feedback: [
+          {
+            id: 'f1',
+            userId: '1002',
+            queryId: 'q100',
+            queryCategory: 'pest',
+            queryText: 'Leaves have brown spots, what to do?',
+            responseText: 'It looks like a fungal issue. Apply recommended fungicide and improve drainage.',
+            rating: 4,
+            createdAt: new Date().toISOString(),
+          },
+          {
+            id: 'f2',
+            userId: '1005',
+            queryId: 'q101',
+            queryCategory: 'weather',
+            queryText: 'Any upcoming heavy rains?',
+            responseText: 'Yes, rain expected next week; take precautions.',
+            rating: 5,
+            createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+          },
+        ],
+
         isLoading: false,
 
         fetchUsers: async () => {
