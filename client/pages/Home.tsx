@@ -268,8 +268,8 @@ const Home = () => {
                             <div className="h-24 mx-auto mb-3" />
                           )}
                           <Button variant="ghost" size="sm" asChild className="group/btn hover:bg-slate-50 transition-all">
-                            <Link to={feature.href}>
-                              {feature.title === 'Training Programs' || feature.title === 'Organic Farming' ? 'Learn More' : 'Get Started'}
+                            <Link to={feature.href} className="inline-flex items-center justify-center gap-2">
+                              {feature.title === 'Training Programs' || feature.title === 'Organic Farming' || feature.title === 'Customer Support' ? 'Learn More' : 'Get Started'}
                               <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
                             </Link>
                           </Button>
