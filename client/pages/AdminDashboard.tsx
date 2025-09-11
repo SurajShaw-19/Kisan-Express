@@ -103,11 +103,6 @@ const AdminDashboard: React.FC = () => {
         <div className="text-right">
           <p className="text-sm text-muted-foreground">Signed in as</p>
           <p className="font-semibold">{user?.firstName} {user?.lastName} {user?.adminId ? `(${user.adminId})` : ''}</p>
-          <div className="mt-3 flex justify-end gap-2">
-            <Button asChild size="sm" className="bg-emerald-600 text-white hover:bg-emerald-700">
-              <Link to="/admin/feedback">Feedback</Link>
-            </Button>
-          </div>
         </div>
       </div>
 
