@@ -292,8 +292,56 @@ const AdminDashboard: React.FC = () => {
                     ))}
                   </div>
                 </div>
+
               </div>
             </CardContent>
+
+          <Card className="mt-4 bg-gradient-to-br from-indigo-50 to-indigo-100">
+            <CardHeader>
+              <CardTitle>Quick Actions</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-2">
+              <Button asChild>
+                <Link to="/settings">System Settings</Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="mt-4">
+            <CardHeader>
+              <CardTitle>Customer Feedback</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              {feedback.length === 0 ? (
+                <p className="text-sm text-muted-foreground">No feedback yet</p>
+              ) : (
+                feedback.slice(0,5).map((f) => {
+                  const u = getUserById(f.userId || '');
+                  return (
+                    <div key={f.id} className="p-2 border rounded-md">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="font-medium">{u ? `${u.firstName} ${u.lastName}` : 'Unknown'}</div>
+                          <div className="text-xs text-muted-foreground">{f.queryCategory} — {new Date(f.createdAt).toLocaleDateString()}</div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button size="xs" onClick={() => { /* view */ }}>View</Button>
+                          <Button size="xs" variant="destructive" onClick={() => deleteFeedback(f.id)}>Delete</Button>
+                        </div>
+                      </div>
+                      <div className="text-sm text-muted-foreground mt-2">{f.queryText}</div>
+                      <div className="text-sm mt-1">Response: <span className="font-medium">{f.responseText}</span></div>
+                    </div>
+                  );
+                })
+              )}
+              <div className="text-right mt-2">
+                <Button asChild>
+                  <Link to="/admin/feedback">View all feedback</Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
           </Card>
 
           <Card className="mt-4 bg-gradient-to-br from-indigo-50 to-indigo-100">
