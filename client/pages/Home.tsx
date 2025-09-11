@@ -63,6 +63,25 @@ const Home = () => {
     } catch (err) {}
   }, [location]);
 
+  // Slider measurement: set sliderEl when DOM mounts and recompute shift on resize or showMore change
+  useEffect(() => {
+    const el = document.querySelector('#features-slider .slider-row') as HTMLDivElement | null;
+    setSliderEl(el);
+
+    const compute = () => {
+      if (!el) return setShiftPx(0);
+      const firstChild = el.querySelector(':scope > div');
+      if (!firstChild) return setShiftPx(0);
+      const cardWidth = (firstChild as HTMLElement).offsetWidth;
+      // shift by two cards to bring Training Programs and Customer Support into view
+      setShiftPx(showMore ? cardWidth * 2 : 0);
+    };
+
+    compute();
+    window.addEventListener('resize', compute);
+    return () => window.removeEventListener('resize', compute);
+  }, [showMore]);
+
   // Ordered features (includes Organic Farming and Training Programs)
   const featuresOrdered = [
     {
