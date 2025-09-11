@@ -141,6 +141,16 @@ const AdminDashboard: React.FC = () => {
           </CardContent>
         </Card>
 
+        <Card className="bg-gradient-to-r from-indigo-500 to-indigo-600 text-white">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2"><Users className="w-5 h-5" /> Feedback</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold">{totalFeedback}</p>
+            <p className="text-sm text-white/90">Customer feedback entries</p>
+          </CardContent>
+        </Card>
+
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 card-entrance">
