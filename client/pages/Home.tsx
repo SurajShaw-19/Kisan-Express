@@ -186,7 +186,7 @@ const Home = () => {
               <span style={{ color: 'rgba(248,231,28,1)' }}>
                 Your Digital
               </span>
-              <span className="block" style={{ color: 'rgba(248,231,28,1)' }}>
+              <span className="block" style={{ color: 'rgba(248,231,28,1)', paddingTop: '9px' }}>
                 Krishi Officer
               </span>
             </h1>
