@@ -204,7 +204,7 @@ export const useAdminStore = create<AdminState>()(
       }),
       {
         name: 'admin-storage',
-        partialize: (state) => ({ users: state.users, notifications: state.notifications }),
+        partialize: (state) => ({ users: state.users, notifications: state.notifications, feedback: state.feedback }),
       }
     ),
     { name: 'admin-store' }
