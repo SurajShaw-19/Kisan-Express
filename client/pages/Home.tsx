@@ -47,6 +47,9 @@ const Home = () => {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const user = useAuthStore((s) => s.user);
   const [showMore, setShowMore] = useState(false);
+  const sliderRef = (null as unknown) as HTMLDivElement | null;
+  const [sliderEl, setSliderEl] = useState<HTMLDivElement | null>(null);
+  const [shiftPx, setShiftPx] = useState(0);
 
   useEffect(() => {
     try {
