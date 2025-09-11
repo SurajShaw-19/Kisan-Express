@@ -272,33 +272,35 @@ const Home = () => {
 
             <div className="relative">
               <div className="overflow-hidden">
-                <div className="flex transition-transform duration-500" style={{ transform: showMore ? 'translateX(-25%)' : 'translateX(0%)' }}>
-                  {featuresOrdered.map((feature, idx) => (
-                    <div key={idx} className="flex-shrink-0 w-full md:w-1/2 lg:w-1/4 p-2">
-                      <Card className="group hover:shadow-xl transition-all duration-300 border border-gray-100 bg-white/80 overflow-hidden rounded-lg h-full">
-                        <CardHeader className="text-center pb-3 bg-transparent">
-                          <div className={`w-14 h-14 rounded-xl ${feature.color} flex items-center justify-center mx-auto mb-4`}>
-                            <feature.icon className="w-8 h-8" />
-                          </div>
-                          <CardTitle className="text-lg mb-2 group-hover:text-slate-700 transition-colors">{feature.title}</CardTitle>
-                        </CardHeader>
-                        <CardContent className="text-center p-4">
-                          <CardDescription className="mb-3 text-sm leading-relaxed">{feature.description}</CardDescription>
-                          {feature.animation ? (
-                            <FarmerAnimation className="h-24 mx-auto mb-3" />
-                          ) : (
-                            <div className="h-24 mx-auto mb-3" />
-                          )}
-                          <Button variant="ghost" size="sm" asChild className="group/btn hover:bg-slate-50 transition-all">
-                            <Link to={feature.href} className="inline-flex items-center justify-center gap-2">
-                              {feature.title === 'Training Programs' || feature.title === 'Organic Farming' || feature.title === 'Customer Support' ? 'Learn More' : 'Get Started'}
-                              <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                            </Link>
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  ))}
+                <div id="features-slider">
+                  <div className="slider-row flex transition-transform duration-500" style={{ transform: `translateX(-${shiftPx}px)` }}>
+                    {featuresOrdered.map((feature, idx) => (
+                      <div key={idx} className="flex-shrink-0 w-full md:w-1/2 lg:w-1/4 p-2">
+                        <Card className="group hover:shadow-xl transition-all duration-300 border border-gray-100 bg-white/80 overflow-hidden rounded-lg h-full">
+                          <CardHeader className="text-center pb-3 bg-transparent">
+                            <div className={`w-14 h-14 rounded-xl ${feature.color} flex items-center justify-center mx-auto mb-4`}>
+                              <feature.icon className="w-8 h-8" />
+                            </div>
+                            <CardTitle className="text-lg mb-2 group-hover:text-slate-700 transition-colors">{feature.title}</CardTitle>
+                          </CardHeader>
+                          <CardContent className="text-center p-4">
+                            <CardDescription className="mb-3 text-sm leading-relaxed">{feature.description}</CardDescription>
+                            {feature.animation ? (
+                              <FarmerAnimation className="h-24 mx-auto mb-3" />
+                            ) : (
+                              <div className="h-24 mx-auto mb-3" />
+                            )}
+                            <Button variant="ghost" size="sm" asChild className="group/btn hover:bg-slate-50 transition-all">
+                              <Link to={feature.href} className="inline-flex items-center justify-center gap-2">
+                                {feature.title === 'Training Programs' || feature.title === 'Organic Farming' || feature.title === 'Customer Support' ? 'Learn More' : 'Get Started'}
+                                <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                              </Link>
+                            </Button>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
