@@ -36,6 +36,7 @@ const AdminDashboard: React.FC = () => {
   const deleteUser = useAdminStore((s) => s.deleteUser);
   const notifications = useAdminStore((s) => s.notifications);
   const markNotificationRead = useAdminStore((s) => s.markNotificationRead);
+  const getUserById = useAdminStore((s) => s.getUserById);
 
   const queries = useFarmerStore((s) => s.queries);
 
