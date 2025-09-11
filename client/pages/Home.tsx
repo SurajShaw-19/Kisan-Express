@@ -242,62 +242,45 @@ const Home = () => {
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">Access comprehensive agricultural services designed specifically for Indian farmers</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {features.map((feature, index) => (
-                <Card key={index} className="group hover:shadow-xl transition-all duration-300 border border-gray-100 bg-white/80 overflow-hidden rounded-lg">
-                  <CardHeader className="text-center pb-3 bg-transparent">
-                    <div className={`w-14 h-14 rounded-xl ${feature.color} flex items-center justify-center mx-auto mb-4`}>
-                      <feature.icon className="w-8 h-8" />
+            <div className="relative">
+              <div className="overflow-hidden">
+                <div className="flex transition-transform duration-500" style={{ transform: showMore ? 'translateX(-25%)' : 'translateX(0%)' }}>
+                  {[...features, ...additionalFeatures].map((feature, idx) => (
+                    <div key={idx} className="flex-shrink-0 w-full md:w-1/2 lg:w-1/4 p-2">
+                      <Card className="group hover:shadow-xl transition-all duration-300 border border-gray-100 bg-white/80 overflow-hidden rounded-lg h-full">
+                        <CardHeader className="text-center pb-3 bg-transparent">
+                          <div className={`w-14 h-14 rounded-xl ${feature.color} flex items-center justify-center mx-auto mb-4`}>
+                            <feature.icon className="w-8 h-8" />
+                          </div>
+                          <CardTitle className="text-lg mb-2 group-hover:text-slate-700 transition-colors">{feature.title}</CardTitle>
+                        </CardHeader>
+                        <CardContent className="text-center p-4">
+                          <CardDescription className="mb-3 text-sm leading-relaxed">{feature.description}</CardDescription>
+                          {feature.animation ? (
+                            <FarmerAnimation className="h-24 mx-auto mb-3" />
+                          ) : (
+                            <div className="h-24 mx-auto mb-3" />
+                          )}
+                          <Button variant="ghost" size="sm" asChild className="group/btn hover:bg-slate-50 transition-all">
+                            <Link to={feature.href}>
+                              {feature.title === 'Training Programs' || feature.title === 'Organic Farming' ? 'Learn More' : 'Get Started'}
+                              <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                            </Link>
+                          </Button>
+                        </CardContent>
+                      </Card>
                     </div>
-                    <CardTitle className="text-lg mb-2 group-hover:text-slate-700 transition-colors">{feature.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-center p-4">
-                    <CardDescription className="mb-3 text-sm leading-relaxed">{feature.description}</CardDescription>
-                    {feature.animation ? (
-                      <FarmerAnimation className="h-24 mx-auto mb-3" />
-                    ) : (
-                      <div className="h-24 mx-auto mb-3" />
-                    )}
-                    <Button variant="ghost" size="sm" asChild className="group/btn hover:bg-slate-50 transition-all">
-                      <Link to={feature.href}>
-                        Get Started
-                        <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
+                  ))}
+                </div>
+              </div>
 
-              {/* Expand toggle card shown when authenticated */}
               {isAuthenticated && (
-                <div className="flex items-center justify-center">
-                  <button onClick={() => setShowMore((s) => !s)} aria-label="toggle more" className="flex items-center justify-center w-20 h-20 bg-white rounded-lg border border-gray-200 shadow hover:shadow-md transition">
-                    {showMore ? <ChevronLeft className="w-6 h-6 text-forest-600" /> : <ChevronRight className="w-6 h-6 text-forest-600" />}
+                <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                  <button onClick={() => setShowMore((s) => !s)} aria-label="toggle more features" className="flex items-center justify-center w-12 h-12 bg-white rounded-full border border-gray-200 shadow hover:shadow-md transition">
+                    {showMore ? <ChevronLeft className="w-5 h-5 text-forest-600" /> : <ChevronRight className="w-5 h-5 text-forest-600" />}
                   </button>
                 </div>
               )}
-
-              {/* Additional features revealed */}
-              {isAuthenticated && showMore && additionalFeatures.map((feature, idx) => (
-                <Card key={`more-${idx}`} className="group hover:shadow-xl transition-all duration-300 border border-gray-100 bg-white/80 overflow-hidden rounded-lg">
-                  <CardHeader className="text-center pb-3 bg-transparent">
-                    <div className={`w-14 h-14 rounded-xl ${feature.color} flex items-center justify-center mx-auto mb-4`}>
-                      <feature.icon className="w-8 h-8" />
-                    </div>
-                    <CardTitle className="text-lg mb-2 group-hover:text-slate-700 transition-colors">{feature.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-center p-4">
-                    <CardDescription className="mb-3 text-sm leading-relaxed">{feature.description}</CardDescription>
-                    <div className="h-24 mx-auto mb-3" />
-                    <Button variant="ghost" size="sm" asChild className="group/btn hover:bg-slate-50 transition-all">
-                      <Link to={feature.href}>
-                        Learn More
-                        <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
             </div>
           </div>
         </div>
