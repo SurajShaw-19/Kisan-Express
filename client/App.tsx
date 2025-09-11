@@ -16,6 +16,7 @@ import { initMocks } from "./lib/mocks/browser";
 const Home = lazy(() => import("./pages/Home"));
 const OrganicFarming = lazy(() => import("./pages/OrganicFarming"));
 const TrainingPrograms = lazy(() => import("./pages/TrainingPrograms"));
+const CustomerSupport = lazy(() => import("./pages/CustomerSupport"));
 const RootRedirect = lazy(() => import("./pages/RootRedirect"));
 const AskQuery = lazy(() => import("./pages/AskQuery"));
 const Advisory = lazy(() => import("./pages/Advisory"));
@@ -79,6 +80,7 @@ const App = () => {
               <Route path="/expert-support" element={<ExpertSupport />} />
               <Route path="/organic" element={<OrganicFarming />} />
               <Route path="/training-programs" element={<TrainingPrograms />} />
+              <Route path="/customer-support" element={<CustomerSupport />} />
               <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><AdminDashboard /></ProtectedRoute>} />
               <Route path="/admin/feedback" element={<ProtectedRoute requiredRole="admin"><AdminFeedback /></ProtectedRoute>} />
               <Route path="/users/:id" element={<ProtectedRoute requiredRole="admin"><UserDetail /></ProtectedRoute>} />
