@@ -183,10 +183,10 @@ const Home = () => {
             </Badge>
 
             <h1 onClick={() => { setAnimate(true); setTimeout(() => setAnimate(false), 900); }} className={`text-5xl lg:text-7xl font-bold mb-8 leading-tight ${animate ? 'animate-hero-pop' : ''}`}>
-              <span className="text-foreground">
+              <span style={{ color: 'rgba(248,231,28,1)' }}>
                 Your Digital
               </span>
-              <span className="block text-foreground">
+              <span className="block" style={{ color: 'rgba(248,231,28,1)' }}>
                 Krishi Officer
               </span>
             </h1>
