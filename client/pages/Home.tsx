@@ -60,7 +60,8 @@ const Home = () => {
     } catch (err) {}
   }, [location]);
 
-  const features = [
+  // Ordered features (includes Organic Farming and Training Programs)
+  const featuresOrdered = [
     {
       icon: MessageSquare,
       title: "Ask Expert Questions",
@@ -78,6 +79,14 @@ const Home = () => {
       animation: plantAnimation,
     },
     {
+      icon: Leaf,
+      title: "Organic Farming",
+      description: "Learn about organic farming practices and resources.",
+      href: "/organic",
+      color: "bg-amber-100 text-amber-700",
+      animation: communityAnimation,
+    },
+    {
       icon: FileText,
       title: "Government Schemes",
       description: "Explore and apply for various government subsidies, loans, and agricultural schemes.",
@@ -85,17 +94,6 @@ const Home = () => {
       color: "bg-lime-100 text-lime-700",
       animation: communityAnimation,
     },
-    {
-      icon: Users,
-      title: "Community Support",
-      description: "Connect with fellow farmers and agricultural officers for knowledge sharing.",
-      href: "/about",
-      color: "bg-teal-100 text-teal-700",
-      animation: farmerAnimation,
-    },
-  ];
-
-  const additionalFeatures = [
     {
       icon: ChevronRight,
       title: "Training Programs",
@@ -105,12 +103,12 @@ const Home = () => {
       animation: null,
     },
     {
-      icon: Leaf,
-      title: "Organic Farming",
-      description: "Learn about organic farming practices and resources.",
-      href: "/organic",
-      color: "bg-amber-100 text-amber-700",
-      animation: null,
+      icon: Users,
+      title: "Community Support",
+      description: "Connect with fellow farmers and agricultural officers for knowledge sharing.",
+      href: "/about",
+      color: "bg-teal-100 text-teal-700",
+      animation: farmerAnimation,
     },
   ];
 
