@@ -2,6 +2,17 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
+export type AlertSeverity = "low" | "medium" | "high";
+export type AlertType = "weather" | "crop";
+export interface WeatherResponse { /* ... */ }
+export interface CropSuggestionResponse { /* ... */ }
+export interface AlertItem {
+  id: string;
+  message: string;
+  severity: AlertSeverity;
+  type: AlertType;
+  createdAt?: string;
+}
 
 export function createServer() {
   const app = express();

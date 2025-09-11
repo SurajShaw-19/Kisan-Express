@@ -28,12 +28,14 @@ export default defineConfig(({ mode }) => ({
 function expressPlugin(): Plugin {
   return {
     name: "express-plugin",
-    apply: "serve", // Only apply during development (serve mode)
-    configureServer(server) {
+    apply: "serve", // only in dev
+    configureServer(viteServer) {
       const app = createServer();
 
-      // Add Express app as middleware to Vite dev server
-      server.middlewares.use(app);
+      // ✅ mount Express API under /api
+      viteServer.middlewares.use("/api", app);
+
+      // ⚠️ fallback: let Vite handle frontend routes (so /alerts, /about work)
     },
   };
 }
