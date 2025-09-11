@@ -232,7 +232,7 @@ const Home = () => {
       </section>
 
       {/* Features Section (moved below Query Types) */}
-      <section className="py-12">
+      <section className="py-6">
         <div className="container px-4 mx-auto">
           <div className="max-w-6xl mx-auto rounded-2xl bg-white/90 border border-gray-200 p-6 md:p-8 shadow-sm">
             <div className="text-center mb-6">
