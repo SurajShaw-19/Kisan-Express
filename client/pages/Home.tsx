@@ -243,7 +243,7 @@ const Home = () => {
             <div className="relative">
               <div className="overflow-hidden">
                 <div className="flex transition-transform duration-500" style={{ transform: showMore ? 'translateX(-25%)' : 'translateX(0%)' }}>
-                  {[...features, ...additionalFeatures].map((feature, idx) => (
+                  {featuresOrdered.map((feature, idx) => (
                     <div key={idx} className="flex-shrink-0 w-full md:w-1/2 lg:w-1/4 p-2">
                       <Card className="group hover:shadow-xl transition-all duration-300 border border-gray-100 bg-white/80 overflow-hidden rounded-lg h-full">
                         <CardHeader className="text-center pb-3 bg-transparent">
