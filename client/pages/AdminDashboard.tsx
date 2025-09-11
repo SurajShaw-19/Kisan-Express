@@ -66,6 +66,11 @@ const AdminDashboard: React.FC = () => {
   const totalAdmins = users.filter((u) => u.role === 'admin').length;
   const verified = users.filter((u) => u.isVerified).length;
 
+  const feedback = useAdminStore((s) => s.feedback);
+  const fetchFeedback = useAdminStore((s) => s.fetchFeedback);
+  const deleteFeedback = useAdminStore((s) => s.deleteFeedback);
+  const totalFeedback = feedback.length;
+
   // Top crops aggregation
   const topCrops = useMemo(() => {
     const map = new Map<string, number>();
