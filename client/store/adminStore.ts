@@ -10,9 +10,21 @@ export interface AdminNotification {
   createdAt: string;
 }
 
+export interface CustomerFeedback {
+  id: string;
+  userId?: string;
+  queryId?: string;
+  queryCategory?: string;
+  queryText: string;
+  responseText?: string;
+  rating?: number; // 1-5
+  createdAt: string;
+}
+
 interface AdminState {
   users: User[];
   notifications: AdminNotification[];
+  feedback: CustomerFeedback[];
   isLoading: boolean;
 
   // user actions
@@ -20,6 +32,11 @@ interface AdminState {
   getUserById: (id: string) => User | undefined;
   deleteUser: (id: string) => Promise<boolean>;
   searchUsers: (query: string) => User[];
+
+  // feedback
+  fetchFeedback: () => CustomerFeedback[];
+  addFeedback: (fb: Omit<CustomerFeedback, 'id' | 'createdAt'>) => void;
+  deleteFeedback: (id: string) => void;
 
   // notifications
   fetchNotifications: () => AdminNotification[];
