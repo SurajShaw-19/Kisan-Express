@@ -275,7 +275,7 @@ const OrganicFarming: React.FC = () => {
                   Find training programs in your area for hands-on learning.
                 </p>
                 <Link to="/training-programs">
-                  <Button variant="ghost">Find Trainings</Button>
+                  <Button>Find Trainings</Button>
                 </Link>
               </Card>
 
@@ -284,8 +284,8 @@ const OrganicFarming: React.FC = () => {
                 <p className="text-sm text-muted-foreground mb-4">
                   Connect with farmers practicing organic methods.
                 </p>
-                <Link to="/about">
-                  <Button variant="outline">Join Community</Button>
+                <Link to="/community">
+                  <Button>Join Community</Button>
                 </Link>
               </Card>
             </div>

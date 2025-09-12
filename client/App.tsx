@@ -23,6 +23,7 @@ const Advisory = lazy(() => import("./pages/Advisory"));
 const Alerts = lazy(() => import("./pages/Alerts"));
 const Schemes = lazy(() => import("./pages/Schemes"));
 const About = lazy(() => import("./pages/About"));
+const Community = lazy(() => import("./pages/Community"));
     const ExpertSupport = lazy(() => import("./pages/ExpertSupport"));
     const Login = lazy(() => import("./pages/Login"));
     const Signup = lazy(() => import("./pages/Signup"));
@@ -86,6 +87,7 @@ const App = () => {
               <Route path="/admin/feedback" element={<ProtectedRoute requiredRole="admin"><AdminFeedback /></ProtectedRoute>} />
               <Route path="/users/:id" element={<ProtectedRoute requiredRole="admin"><UserDetail /></ProtectedRoute>} />
               <Route path="/about" element={<About />} />
+              <Route path="/community" element={<Community />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
