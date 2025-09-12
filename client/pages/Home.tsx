@@ -291,7 +291,7 @@ const Home = () => {
                   <div className="slider-row flex transition-transform duration-500" style={{ transform: `translateX(-${shiftPx}px)` }}>
                     {featuresOrdered.map((feature, idx) => (
                       <div key={idx} className="flex-shrink-0 w-full md:w-1/2 lg:w-1/4 p-2">
-                        <Card className="group hover:shadow-xl transition-all duration-300 border border-gray-100 bg-white/80 overflow-hidden rounded-lg h-full">
+                        <Card className="group hover:shadow-xl transition-all duration-300 border border-gray-100 bg-white/80 overflow-hidden rounded-lg" style={{ height: '80%' }}>
                           <CardHeader className="text-center pb-3 bg-transparent">
                             <div className={`w-14 h-14 rounded-xl ${feature.color} flex items-center justify-center mx-auto mb-4`}>
                               <feature.icon className="w-8 h-8" />
