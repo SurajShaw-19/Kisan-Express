@@ -82,16 +82,8 @@ const Home = () => {
     return () => window.removeEventListener('resize', compute);
   }, [showMore]);
 
-  // Ordered features (includes Organic Farming and Training Programs)
+  // Ordered features (user requested order)
   const featuresOrdered = [
-    {
-      icon: MessageSquare,
-      title: "Ask Expert Questions",
-      description: "Get instant answers from agricultural experts using text, images, or voice messages.",
-      href: "/query",
-      color: "bg-green-100 text-green-700",
-      animation: farmerAnimation,
-    },
     {
       icon: AlertTriangle,
       title: "Weather & Pest Alerts",
@@ -99,6 +91,14 @@ const Home = () => {
       href: "/alerts",
       color: "bg-emerald-100 text-emerald-700",
       animation: plantAnimation,
+    },
+    {
+      icon: FileText,
+      title: "Government Schemes",
+      description: "Explore and apply for various government subsidies, loans, and agricultural schemes.",
+      href: "/schemes",
+      color: "bg-lime-100 text-lime-700",
+      animation: communityAnimation,
     },
     {
       icon: Leaf,
@@ -109,12 +109,12 @@ const Home = () => {
       animation: communityAnimation,
     },
     {
-      icon: FileText,
-      title: "Government Schemes",
-      description: "Explore and apply for various government subsidies, loans, and agricultural schemes.",
-      href: "/schemes",
-      color: "bg-lime-100 text-lime-700",
-      animation: communityAnimation,
+      icon: MessageSquare,
+      title: "Ask Expert Questions",
+      description: "Get instant answers from agricultural experts using text, images, or voice messages.",
+      href: "/query",
+      color: "bg-green-100 text-green-700",
+      animation: farmerAnimation,
     },
     {
       icon: ChevronRight,
