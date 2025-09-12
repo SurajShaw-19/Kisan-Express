@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Leaf, Sun, CloudRain, BookOpen, Image } from 'lucide-react';
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Leaf, Sun, CloudRain, BookOpen, Image } from "lucide-react";
 
 const OrganicFarming: React.FC = () => {
   return (
@@ -14,7 +14,11 @@ const OrganicFarming: React.FC = () => {
             </div>
             <div>
               <h1 className="text-3xl font-bold">Organic Farming</h1>
-              <p className="text-muted-foreground mt-1 max-w-xl">Practical, easy-to-follow organic farming techniques for small and medium farms — soil health, composting, natural pest control, crop rotation and certification guidance.</p>
+              <p className="text-muted-foreground mt-1 max-w-xl">
+                Practical, easy-to-follow organic farming techniques for small
+                and medium farms — soil health, composting, natural pest
+                control, crop rotation and certification guidance.
+              </p>
             </div>
           </div>
 
@@ -30,7 +34,11 @@ const OrganicFarming: React.FC = () => {
               </div>
               <div className="mt-4 space-y-4">
                 <h2 className="text-xl font-semibold">Why organic farming?</h2>
-                <p className="text-muted-foreground">Organic farming improves long-term soil fertility, reduces chemical inputs, and produces healthier crops. Below are actionable techniques you can start using this season.</p>
+                <p className="text-muted-foreground">
+                  Organic farming improves long-term soil fertility, reduces
+                  chemical inputs, and produces healthier crops. Below are
+                  actionable techniques you can start using this season.
+                </p>
               </div>
             </div>
 
@@ -42,7 +50,10 @@ const OrganicFarming: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold">Climate & Seasons</h3>
-                    <p className="text-sm text-muted-foreground">Plan crops according to local seasons; choose varieties adapted to your region for better yields.</p>
+                    <p className="text-sm text-muted-foreground">
+                      Plan crops according to local seasons; choose varieties
+                      adapted to your region for better yields.
+                    </p>
                   </div>
                 </div>
               </Card>
@@ -54,7 +65,10 @@ const OrganicFarming: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold">Water Management</h3>
-                    <p className="text-sm text-muted-foreground">Use mulching and drip irrigation to conserve water and maintain soil moisture.</p>
+                    <p className="text-sm text-muted-foreground">
+                      Use mulching and drip irrigation to conserve water and
+                      maintain soil moisture.
+                    </p>
                   </div>
                 </div>
               </Card>
@@ -72,11 +86,26 @@ const OrganicFarming: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold">Soil Health & Composting</h3>
-                    <p className="text-sm text-muted-foreground">Make on-farm compost using crop residues and animal manure. Use compost tea to boost soil microbiome.</p>
+                    <p className="text-sm text-muted-foreground">
+                      Make on-farm compost using crop residues and animal
+                      manure. Use compost tea to boost soil microbiome.
+                    </p>
                     <div className="mt-3 grid grid-cols-3 gap-2">
-                      <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=800&auto=format&fit=crop&s=8c7f0d8d5f1e8b4d2b2d6f6f5b1c7e2d" alt="compost pile" className="rounded-md w-full h-20 object-cover" />
-                      <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=800&auto=format&fit=crop&s=8c7f0d8d5f1e8b4d2b2d6f6f5b1c7e2d" alt="soil" className="rounded-md w-full h-20 object-cover" />
-                      <img src="https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?q=80&w=800&auto=format&fit=crop&s=9b3a1e3a0b1f455d" alt="organic matter" className="rounded-md w-full h-20 object-cover" />
+                      <img
+                        src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=800&auto=format&fit=crop&s=8c7f0d8d5f1e8b4d2b2d6f6f5b1c7e2d"
+                        alt="compost pile"
+                        className="rounded-md w-full h-20 object-cover"
+                      />
+                      <img
+                        src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=800&auto=format&fit=crop&s=8c7f0d8d5f1e8b4d2b2d6f6f5b1c7e2d"
+                        alt="soil"
+                        className="rounded-md w-full h-20 object-cover"
+                      />
+                      <img
+                        src="https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?q=80&w=800&auto=format&fit=crop&s=9b3a1e3a0b1f455d"
+                        alt="organic matter"
+                        className="rounded-md w-full h-20 object-cover"
+                      />
                     </div>
                   </div>
                 </div>
@@ -88,12 +117,29 @@ const OrganicFarming: React.FC = () => {
                     <BookOpen className="w-6 h-6 text-amber-700" />
                   </div>
                   <div>
-                    <h3 className="font-semibold">Natural Pest & Disease Management</h3>
-                    <p className="text-sm text-muted-foreground">Use biopesticides, pheromone traps, intercropping, and beneficial insects instead of synthetic chemicals.</p>
+                    <h3 className="font-semibold">
+                      Natural Pest & Disease Management
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Use biopesticides, pheromone traps, intercropping, and
+                      beneficial insects instead of synthetic chemicals.
+                    </p>
                     <div className="mt-3 grid grid-cols-3 gap-2">
-                      <img src="https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?q=80&w=800&auto=format&fit=crop&s=1a2f6b6a" alt="pest trap" className="rounded-md w-full h-20 object-cover" />
-                      <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=800&auto=format&fit=crop&s=8c7f0d8d5f1e8b4d2b2d6f6f5b1c7e2d" alt="beneficial insects" className="rounded-md w-full h-20 object-cover" />
-                      <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=800&auto=format&fit=crop&s=8c7f0d8d5f1e8b4d2b2d6f6f5b1c7e2d" alt="intercropping" className="rounded-md w-full h-20 object-cover" />
+                      <img
+                        src="https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?q=80&w=800&auto=format&fit=crop&s=1a2f6b6a"
+                        alt="pest trap"
+                        className="rounded-md w-full h-20 object-cover"
+                      />
+                      <img
+                        src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=800&auto=format&fit=crop&s=8c7f0d8d5f1e8b4d2b2d6f6f5b1c7e2d"
+                        alt="beneficial insects"
+                        className="rounded-md w-full h-20 object-cover"
+                      />
+                      <img
+                        src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=800&auto=format&fit=crop&s=8c7f0d8d5f1e8b4d2b2d6f6f5b1c7e2d"
+                        alt="intercropping"
+                        className="rounded-md w-full h-20 object-cover"
+                      />
                     </div>
                   </div>
                 </div>
@@ -105,12 +151,29 @@ const OrganicFarming: React.FC = () => {
                     <Image className="w-6 h-6 text-green-700" />
                   </div>
                   <div>
-                    <h3 className="font-semibold">Crop Rotation & Diversification</h3>
-                    <p className="text-sm text-muted-foreground">Rotate legumes with cereals to fix nitrogen naturally and break pest cycles.</p>
+                    <h3 className="font-semibold">
+                      Crop Rotation & Diversification
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Rotate legumes with cereals to fix nitrogen naturally and
+                      break pest cycles.
+                    </p>
                     <div className="mt-3 grid grid-cols-3 gap-2">
-                      <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=800&auto=format&fit=crop&s=8c7f0d8d5f1e8b4d2b2d6f6f5b1c7e2d" alt="crop rotation" className="rounded-md w-full h-20 object-cover" />
-                      <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=800&auto=format&fit=crop&s=3fbae5a2" alt="mixed cropping" className="rounded-md w-full h-20 object-cover" />
-                      <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?q=80&w=800&auto=format&fit=crop&s=5e6a1c8" alt="legumes" className="rounded-md w-full h-20 object-cover" />
+                      <img
+                        src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=800&auto=format&fit=crop&s=8c7f0d8d5f1e8b4d2b2d6f6f5b1c7e2d"
+                        alt="crop rotation"
+                        className="rounded-md w-full h-20 object-cover"
+                      />
+                      <img
+                        src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=800&auto=format&fit=crop&s=3fbae5a2"
+                        alt="mixed cropping"
+                        className="rounded-md w-full h-20 object-cover"
+                      />
+                      <img
+                        src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?q=80&w=800&auto=format&fit=crop&s=5e6a1c8"
+                        alt="legumes"
+                        className="rounded-md w-full h-20 object-cover"
+                      />
                     </div>
                   </div>
                 </div>
@@ -122,12 +185,29 @@ const OrganicFarming: React.FC = () => {
                     <Leaf className="w-6 h-6 text-rose-700" />
                   </div>
                   <div>
-                    <h3 className="font-semibold">Certification & Market Access</h3>
-                    <p className="text-sm text-muted-foreground">Understand organic certification steps and access premium markets for organic produce.</p>
+                    <h3 className="font-semibold">
+                      Certification & Market Access
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Understand organic certification steps and access premium
+                      markets for organic produce.
+                    </p>
                     <div className="mt-3 grid grid-cols-3 gap-2">
-                      <img src="https://cdn.builder.io/api/v1/image/assets%2F32cee0efd0ae4056920ed697c3a4ea98%2Fef753d9810aa4db0bcbda601ae3723df?format=webp&width=800" alt="certification" className="rounded-md w-full h-20 object-cover" />
-                      <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop" alt="market access" className="rounded-md w-full h-20 object-cover" />
-                      <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=800&auto=format&fit=crop" alt="organic produce" className="rounded-md w-full h-20 object-cover" />
+                      <img
+                        src="https://cdn.builder.io/api/v1/image/assets%2F32cee0efd0ae4056920ed697c3a4ea98%2Fef753d9810aa4db0bcbda601ae3723df?format=webp&width=800"
+                        alt="certification"
+                        className="rounded-md w-full h-20 object-cover"
+                      />
+                      <img
+                        src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop"
+                        alt="market access"
+                        className="rounded-md w-full h-20 object-cover"
+                      />
+                      <img
+                        src="https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=800&auto=format&fit=crop"
+                        alt="organic produce"
+                        className="rounded-md w-full h-20 object-cover"
+                      />
                     </div>
                   </div>
                 </div>
@@ -137,15 +217,32 @@ const OrganicFarming: React.FC = () => {
 
           {/* Step-by-step compost guide */}
           <section className="mb-8">
-            <h2 className="text-2xl font-bold mb-4">Composting — Step by Step</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              Composting — Step by Step
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {[
-                { title: 'Collect Materials', text: 'Gather crop residues, green leaves, kitchen waste and animal manure.' },
-                { title: 'Layering', text: 'Alternate green and brown layers to balance carbon and nitrogen.' },
-                { title: 'Maintain Moisture', text: 'Keep pile moist but not waterlogged, turn occasionally.' },
-                { title: 'Cure & Use', text: 'Let compost mature 2-4 months, then apply to soil.' },
+                {
+                  title: "Collect Materials",
+                  text: "Gather crop residues, green leaves, kitchen waste and animal manure.",
+                },
+                {
+                  title: "Layering",
+                  text: "Alternate green and brown layers to balance carbon and nitrogen.",
+                },
+                {
+                  title: "Maintain Moisture",
+                  text: "Keep pile moist but not waterlogged, turn occasionally.",
+                },
+                {
+                  title: "Cure & Use",
+                  text: "Let compost mature 2-4 months, then apply to soil.",
+                },
               ].map((s) => (
-                <div key={s.title} className="p-4 border rounded-lg bg-white shadow-sm text-center">
+                <div
+                  key={s.title}
+                  className="p-4 border rounded-lg bg-white shadow-sm text-center"
+                >
                   <div className="text-xl font-semibold mb-2">{s.title}</div>
                   <div className="text-sm text-muted-foreground">{s.text}</div>
                 </div>
@@ -159,15 +256,24 @@ const OrganicFarming: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Card className="p-4">
                 <h3 className="font-semibold mb-2">Beginner's Guide</h3>
-                <p className="text-sm text-muted-foreground mb-4">A practical checklist to start organic farming on your field.</p>
-                <a href="https://www.example.com/organic-guide" target="_blank" rel="noreferrer" className="inline-block">
+                <p className="text-sm text-muted-foreground mb-4">
+                  A practical checklist to start organic farming on your field.
+                </p>
+                <a
+                  href="https://www.example.com/organic-guide"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-block"
+                >
                   <Button>Read Guide</Button>
                 </a>
               </Card>
 
               <Card className="p-4">
                 <h3 className="font-semibold mb-2">Local Trainings</h3>
-                <p className="text-sm text-muted-foreground mb-4">Find training programs in your area for hands-on learning.</p>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Find training programs in your area for hands-on learning.
+                </p>
                 <Link to="/training-programs">
                   <Button variant="ghost">Find Trainings</Button>
                 </Link>
@@ -175,7 +281,9 @@ const OrganicFarming: React.FC = () => {
 
               <Card className="p-4">
                 <h3 className="font-semibold mb-2">Community Forum</h3>
-                <p className="text-sm text-muted-foreground mb-4">Connect with farmers practicing organic methods.</p>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Connect with farmers practicing organic methods.
+                </p>
                 <Link to="/about">
                   <Button variant="outline">Join Community</Button>
                 </Link>
@@ -187,7 +295,11 @@ const OrganicFarming: React.FC = () => {
             <Link to="/">
               <Button variant="outline">Back to Home</Button>
             </Link>
-            <a href="https://example.com/organic-resources" target="_blank" rel="noreferrer">
+            <a
+              href="https://example.com/organic-resources"
+              target="_blank"
+              rel="noreferrer"
+            >
               <Button>Explore More Resources</Button>
             </a>
           </div>
