@@ -156,24 +156,38 @@ const Layout = ({ children }: LayoutProps) => {
           {/* Enhanced User Profile & Mobile Menu Button */}
           <div className="flex items-center space-x-4">
             {/* Language selector */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="flex items-center space-x-2" aria-label="Select language">
-                  <Globe className="w-4 h-4 text-forest-700" />
-                  <span className="text-sm text-forest-700">EN</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-44">
-                <DropdownMenuLabel>Language</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => { localStorage.setItem('kisan_lang', 'en'); document.documentElement.lang = 'en'; window.location.reload(); }}>
-                  English
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => { localStorage.setItem('kisan_lang', 'ml'); document.documentElement.lang = 'ml'; window.location.reload(); }}>
-                  മലയാളം
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {/* Language state is read from localStorage and updates documentElement.lang */}
+            {/* eslint-disable-next-line react-hooks/rules-of-hooks */}
+            {(() => {
+              const [lang, setLang] = (() => {
+                try {
+                  const stored = localStorage.getItem('kisan_lang');
+                  return [stored || 'en', (v:string) => { localStorage.setItem('kisan_lang', v); }];
+                } catch (e) {
+                  return ['en', () => {}];
+                }
+              })();
+              return (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="flex items-center space-x-2" aria-label="Select language">
+                      <Globe className="w-4 h-4 text-forest-700" />
+                      <span className="text-sm text-forest-700">{(localStorage.getItem('kisan_lang') || 'en') === 'en' ? 'EN' : 'മ'}</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-44">
+                    <DropdownMenuLabel>Language</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => { try { localStorage.setItem('kisan_lang', 'en'); document.documentElement.lang = 'en'; } catch (e) {} }}>
+                      English { (localStorage.getItem('kisan_lang') || 'en') === 'en' ? <span className="ml-2 text-forest-600">✓</span> : null }
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => { try { localStorage.setItem('kisan_lang', 'ml'); document.documentElement.lang = 'ml'; } catch (e) {} }}>
+                      മലയാളം { (localStorage.getItem('kisan_lang') || 'en') === 'ml' ? <span className="ml-2 text-forest-600">✓</span> : null }
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              );
+            })()}
             {isAuthenticated && user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
