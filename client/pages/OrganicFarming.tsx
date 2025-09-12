@@ -199,13 +199,13 @@ const OrganicFarming: React.FC = () => {
                         className="rounded-md w-full h-20 object-cover"
                       />
                       <img
-                        src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop"
-                        alt="market access"
+                        src="https://images.pexels.com/photos/11010591/pexels-photo-11010591.jpeg"
+                        alt="farmers market vendors with fresh produce"
                         className="rounded-md w-full h-20 object-cover"
                       />
                       <img
-                        src="https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=800&auto=format&fit=crop"
-                        alt="organic produce"
+                        src="https://images.pexels.com/photos/28100001/pexels-photo-28100001.jpeg"
+                        alt="market stall with fruits and vegetables"
                         className="rounded-md w-full h-20 object-cover"
                       />
                     </div>
