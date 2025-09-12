@@ -17,6 +17,18 @@ const Layout = ({ children }: LayoutProps) => {
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuthStore();
 
+  // language selection state (persisted in localStorage)
+  const [lang, setLang] = useState<string>(() => {
+    try { return localStorage.getItem('kisan_lang') || 'en'; } catch (e) { return 'en'; }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('kisan_lang', lang);
+      document.documentElement.lang = lang;
+    } catch (e) {}
+  }, [lang]);
+
   // Close mobile menu when route changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
