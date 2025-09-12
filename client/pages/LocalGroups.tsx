@@ -54,8 +54,10 @@ const LocalGroups: React.FC = () => {
     if (!leafletLoaded) return;
     const L = (window as any).L;
     if (!L || mapRef.current) return;
-    mapRef.current = L.map('localgroups-map', { scrollWheelZoom: false });
+    mapRef.current = L.map('localgroups-map', { scrollWheelZoom: true, zoomControl: true });
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(mapRef.current);
+    // ensure proper sizing after container render
+    setTimeout(() => { try { mapRef.current.invalidateSize(); } catch (e) {} }, 200);
 
     // initial view
     if (userCoords) {
