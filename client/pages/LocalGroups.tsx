@@ -166,7 +166,7 @@ const LocalGroups: React.FC = () => {
 
             <div className="md:col-span-1">
               <div className="rounded-lg overflow-hidden border">
-                <div id="localgroups-map" className="w-full h-64 bg-slate-100" />
+                <div id="localgroups-map" className="w-full h-96 bg-slate-100" />
                 {false && selectedUser ? (
                   <div />
                 ) : null}
