@@ -372,8 +372,8 @@ const Home = () => {
                   <Phone className="w-10 h-10 text-white" />
                 </div>
                 <h3 className="text-xl font-bold mb-2">Emergency Helpline</h3>
-                <p className="text-base font-semibold text-white/90 mb-1">1800-XXX-XXXX</p>
-                <p className="text-white/90">Available 24/7 for urgent agricultural queries</p>
+                <p className="text-base font-semibold" style={{ color: 'rgba(0,0,0,0.9)', marginBottom: 4 }}>1800-XXX-XXXX</p>
+                <p style={{ color: 'rgba(0,0,0,0.9)', fontWeight: 400 }}>Available 24/7 for urgent agricultural queries</p>
               </div>
             </div>
           </div>
