@@ -368,17 +368,12 @@ const Home = () => {
 
             <div className="relative">
               <div className="bg-gradient-to-tr from-emerald-100 to-yellow-50 rounded-xl p-6 text-center border border-emerald-200 shadow-sm">
-                {farmerAnimation ? (
-                  <FarmerAnimation className="h-28 mx-auto mb-3" />
-                ) : (
-                  <div className="h-28 mx-auto mb-3" />
-                )}
-                <div className="w-20 h-20 bg-forest-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-20 h-20 bg-[#105639] rounded-full flex items-center justify-center mx-auto mb-4" style={{ height: 80, width: 80 }}>
                   <Phone className="w-10 h-10 text-white" />
                 </div>
                 <h3 className="text-xl font-bold mb-2">Emergency Helpline</h3>
-                <p className="text-base font-semibold text-forest-800 mb-1">1800-XXX-XXXX</p>
-                <p className="text-muted-foreground">Available 24/7 for urgent agricultural queries</p>
+                <p className="text-base font-semibold text-white/90 mb-1">1800-XXX-XXXX</p>
+                <p className="text-white/90">Available 24/7 for urgent agricultural queries</p>
               </div>
             </div>
           </div>
