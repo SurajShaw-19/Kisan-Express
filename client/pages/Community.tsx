@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
 
 const Community: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen py-12 bg-gradient-to-b from-emerald-50 via-amber-50 to-yellow-50">
       <div className="container mx-auto px-4">
