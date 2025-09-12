@@ -166,15 +166,10 @@ const LocalGroups: React.FC = () => {
 
             <div className="md:col-span-1">
               <div className="rounded-lg overflow-hidden border">
-                {selectedUser ? (
-                  <iframe
-                    title="map"
-                    src={`https://www.openstreetmap.org/export/embed.html?marker=${selectedUser.coords.lat}%2C${selectedUser.coords.lon}&layer=mapnik`}
-                    className="w-full h-64"
-                  />
-                ) : (
-                  <div className="p-4 text-sm text-muted-foreground">Select a user to view on map.</div>
-                )}
+                <div id="localgroups-map" className="w-full h-64 bg-slate-100" />
+                {false && selectedUser ? (
+                  <div />
+                ) : null}
 
                 <div className="p-4">
                   {selectedUser ? (
