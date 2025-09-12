@@ -128,12 +128,12 @@ const LocalGroups: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto bg-white/95 border border-gray-200 rounded-2xl p-8 shadow">
           <div className="flex items-center justify-between mb-4">
-            <div>
-              <h1 className="text-2xl font-bold">Local Groups & Farmers Nearby</h1>
-              <p className="text-muted-foreground">Connect with nearby farmers and local groups. Click connect to send a request.</p>
-            </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <Button variant="outline" onClick={() => navigate(-1)}>Back</Button>
+              <div>
+                <h1 className="text-2xl font-bold">Local Groups & Farmers Nearby</h1>
+                <p className="text-muted-foreground">Connect with nearby farmers and local groups. Click connect to send a request.</p>
+              </div>
             </div>
           </div>
 
