@@ -114,8 +114,8 @@ const AskQuery = () => {
       formData.append("image", selectedImage);
     }
 
-    // 👇 Replace with your backend URL (adjust if using Vite proxy)
-    const res = await fetch("http://localhost:5000/api/query", {
+    // Use relative path so Vite dev proxy forwards to backend
+    const res = await fetch("/api/query", {
       method: "POST",
       body: formData,
     });
@@ -126,7 +126,7 @@ const AskQuery = () => {
 
     const result = await res.json();
 
-    const queryId = result.id || Date.now().toString();
+    const queryId = result?.id || result?.data?.id || Date.now().toString();
 
     // Save to Zustand store
     addQuery({
@@ -535,5 +535,4 @@ const AskQuery = () => {
     </div>
   );
 };
-
 export default AskQuery;

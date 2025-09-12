@@ -91,10 +91,29 @@ const mockSchemes: any[] = [
 export const handlers = [
   // Submit Query
   http.post("/api/query", async ({ request }) => {
-    const queryData = await request.json();
+    const ct = request.headers.get("content-type") || "";
+    let payload: any = {};
+    if (ct.includes("multipart/form-data")) {
+      const fd = await request.formData();
+      payload = Object.fromEntries(fd.entries());
+      // Normalize types
+      if (payload.type == null) payload.type = "text";
+      if (payload.category == null) payload.category = "general";
+      if (payload.content == null) payload.content = "";
+    } else {
+      try {
+        payload = await request.json();
+      } catch {
+        payload = {};
+      }
+    }
+
     const newQuery = {
       id: Date.now().toString(),
-      ...queryData,
+      farmerId: payload.farmerId || "anonymous",
+      type: payload.type || "text",
+      content: payload.content || "",
+      category: payload.category || "general",
       status: "pending",
       createdAt: new Date().toISOString(),
     };
@@ -104,6 +123,7 @@ export const handlers = [
     return HttpResponse.json(
       {
         success: true,
+        id: newQuery.id,
         data: newQuery,
         message: "Query submitted successfully",
       },
@@ -201,7 +221,7 @@ export const handlers = [
 
   // Submit Feedback
   http.post("/api/feedback", async ({ request }) => {
-    const feedbackData = await request.json();
+    const feedbackData = (await request.json()) as Record<string, any>;
 
     // Simulate delay
     await new Promise((resolve) => setTimeout(resolve, 500));
