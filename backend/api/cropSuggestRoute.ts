@@ -24,9 +24,32 @@ Output JSON in this format only:
 }
     `;
 
+    const key = process.env.GEMINI_API_KEY;
+    if (!key) {
+      const t = weather.current?.temperature_2m ?? 28;
+      const p = weather.current?.precipitation ?? 2;
+      const recs: { crop: string; score: number; reasoning: string; plantingWindow: string }[] = [];
+      if (t >= 24 && t <= 34 && p >= 1) {
+        recs.push({ crop: "Rice (short-duration)", score: 0.88, reasoning: "Warm temps with moisture favor paddy establishment", plantingWindow: "Next 2–3 weeks" });
+      }
+      if (t >= 22 && t <= 32 && p <= 3) {
+        recs.push({ crop: "Banana (Nendran)", score: 0.82, reasoning: "Kerala-suited cultivar; tolerant to intermittent showers", plantingWindow: "Next 4 weeks" });
+      }
+      if (t >= 20 && t <= 30) {
+        recs.push({ crop: "Vegetables (okra/chili)", score: 0.76, reasoning: "Favorable for quick rotation vegetables", plantingWindow: "Next 1–2 weeks" });
+      }
+      if (p >= 3) {
+        recs.push({ crop: "Taro (Colocasia)", score: 0.7, reasoning: "Handles wetter fields well", plantingWindow: "This month" });
+      }
+      if (recs.length < 3) {
+        recs.push({ crop: "Coconut intercropping", score: 0.65, reasoning: "Low-risk perennial base with intercrops", plantingWindow: "Anytime" });
+      }
+      return res.json({ recommendations: recs.slice(0, 5), method: "heuristic" });
+    }
+
     // ✅ use native fetch (Node 18+)
     const geminiResponse = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + process.env.GEMINI_API_KEY,
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + key,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -37,7 +60,16 @@ Output JSON in this format only:
     );
 
     if (!geminiResponse.ok) {
-      return res.status(502).json({ error: "Gemini API error" });
+      // Fallback to heuristic if Gemini fails
+      const t = weather.current?.temperature_2m ?? 28;
+      const p = weather.current?.precipitation ?? 2;
+      const recs: { crop: string; score: number; reasoning: string; plantingWindow: string }[] = [];
+      if (t >= 24 && t <= 34 && p >= 1) recs.push({ crop: "Rice (short-duration)", score: 0.88, reasoning: "Warm temps with moisture favor paddy establishment", plantingWindow: "Next 2–3 weeks" });
+      if (t >= 22 && t <= 32 && p <= 3) recs.push({ crop: "Banana (Nendran)", score: 0.82, reasoning: "Kerala-suited cultivar; tolerant to intermittent showers", plantingWindow: "Next 4 weeks" });
+      if (t >= 20 && t <= 30) recs.push({ crop: "Vegetables (okra/chili)", score: 0.76, reasoning: "Favorable for quick rotation vegetables", plantingWindow: "Next 1–2 weeks" });
+      if (p >= 3) recs.push({ crop: "Taro (Colocasia)", score: 0.7, reasoning: "Handles wetter fields well", plantingWindow: "This month" });
+      if (recs.length < 3) recs.push({ crop: "Coconut intercropping", score: 0.65, reasoning: "Low-risk perennial base with intercrops", plantingWindow: "Anytime" });
+      return res.json({ recommendations: recs.slice(0, 5), method: "heuristic" });
     }
 
     const result = await geminiResponse.json();

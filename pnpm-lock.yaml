@@ -231,6 +231,9 @@ importers:
       three:
         specifier: ^0.176.0
         version: 0.176.0
+      ts-node:
+        specifier: ^10.9.2
+        version: 10.9.2(@swc/core@1.13.3)(@types/node@24.2.1)(typescript@5.9.2)
       ts-node-dev:
         specifier: ^2.0.0
         version: 2.0.0(@swc/core@1.13.3)(@types/node@24.2.1)(typescript@5.9.2)

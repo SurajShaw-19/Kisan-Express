@@ -1,13 +1,20 @@
-import { defineConfig, Plugin } from "vite";
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { createServer } from "./server";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig({
   server: {
-    host: "::",
+    host: "0.0.0.0",
     port: 8080,
+    proxy: {
+      // ✅ Proxy all API requests to backend
+      "/api": {
+        target: "http://localhost:5000", // your Express server
+        changeOrigin: true,
+        secure: false,
+      },
+    },
     fs: {
       allow: ["./client", "./shared"],
       deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "server/**"],
@@ -16,26 +23,11 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: "dist/spa",
   },
-  plugins: [react(), expressPlugin()],
+  plugins: [react()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./client"),
       "@shared": path.resolve(__dirname, "./shared"),
     },
   },
-}));
-
-function expressPlugin(): Plugin {
-  return {
-    name: "express-plugin",
-    apply: "serve", // only in dev
-    configureServer(viteServer) {
-      const app = createServer();
-
-      // ✅ mount Express API under /api
-      viteServer.middlewares.use("/api", app);
-
-      // ⚠️ fallback: let Vite handle frontend routes (so /alerts, /about work)
-    },
-  };
-}
+});

@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertTriangle, Cloud, Bug, Thermometer, TrendingUp, MapPin, Calendar, Filter, Leaf, RefreshCw } from "lucide-react";
-import { useFarmerStore } from "@/store/farmerStore.tsx";
+import { useFarmerStore } from "@/store/farmerStore";
 import type { AlertItem, AlertSeverity, AlertType, WeatherResponse, CropSuggestionResponse } from "@shared/api";
 
 // -- Quick district -> approximate lat/lon mapping (use backend geocoding for production)
@@ -58,6 +58,7 @@ export default function Index() {
   const { profile, alerts, setAlerts } = useFarmerStore();
   const [selectedDistrict, setSelectedDistrict] = useState<string>(profile?.location.district || "Thiruvananthapuram");
   const [selectedType, setSelectedType] = useState<"all" | AlertType>("all");
+  const [selectedArea, setSelectedArea] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState("");
   const [weather, setWeather] = useState<WeatherResponse | null>(null);
   const [crops, setCrops] = useState<CropSuggestionResponse | null>(null);
@@ -135,54 +136,62 @@ export default function Index() {
   }, [setAlerts, mockAlerts]);
 
   // Fetch weather and crop suggestions whenever district changes
+  
+
   useEffect(() => {
-    let mounted = true;
-    const controller = new AbortController();
+  let mounted = true;
+  const controller = new AbortController();
 
-    const run = async () => {
-      if (selectedDistrict === "all") return; // nothing to fetch for 'all'
-      setError(null);
-      setLoadingWeather(true);
-      setLoadingCrops(true);
+  const run = async () => {
+    if (selectedDistrict === "all") return; // nothing to fetch for 'all'
+    setError(null);
+    setLoadingWeather(true);
+    setLoadingCrops(true);
 
-      try {
-        // 1) Call your backend weather endpoint (recommended) which internally calls Open-Meteo or other provider
-        const r = await fetch(`/api/weather?district=${encodeURIComponent(selectedDistrict)}`, { signal: controller.signal });
-        if (!r.ok) throw new Error(`Weather API returned ${r.status}`);
-        const w = (await r.json()) as WeatherResponse;
-        if (!mounted) return;
-        setWeather(w);
+    try {
+      // Base URL from .env
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
 
-        // 2) Immediately call crop suggestion endpoint with full weather response so backend/LLM has everything
-        const c = await fetch(`/api/crop-suggest`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ district: selectedDistrict, coords: keralaDistrictCoords[selectedDistrict], weather: w }),
-          signal: controller.signal,
-        });
-        if (!c.ok) throw new Error(`Crop suggest API returned ${c.status}`);
-        const cs = (await c.json()) as CropSuggestionResponse;
-        if (!mounted) return;
-        setCrops(cs);
-      } catch (e: any) {
-        if (e.name === "AbortError") return;
-        console.error(e);
-        setError(e.message || String(e));
-      } finally {
-        if (mounted) {
-          setLoadingWeather(false);
-          setLoadingCrops(false);
-        }
+      // 1) Call backend weather endpoint
+      const params = new URLSearchParams({ district: selectedDistrict });
+      if (selectedArea.trim()) params.set("area", selectedArea.trim());
+      const r = await fetch(`${baseUrl}/weather?${params.toString()}`, { signal: controller.signal });
+      if (!r.ok) throw new Error(`Weather API returned ${r.status}`);
+      const w = (await r.json()) as WeatherResponse;
+      if (!mounted) return;
+      setWeather(w);
+
+      // 2) Call crop suggestion endpoint
+      const c = await fetch(`${baseUrl}/crop-suggest`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ district: selectedDistrict, coords: keralaDistrictCoords[selectedDistrict], weather: w }),
+        signal: controller.signal,
+      });
+      if (!c.ok) throw new Error(`Crop suggest API returned ${c.status}`);
+      const cs = (await c.json()) as CropSuggestionResponse;
+      if (!mounted) return;
+      setCrops(cs);
+    } catch (e: any) {
+      if (e.name === "AbortError") return;
+      console.error(e);
+      setError(e.message || String(e));
+    } finally {
+      if (mounted) {
+        setLoadingWeather(false);
+        setLoadingCrops(false);
       }
-    };
+    }
+  };
 
-    run();
+  run();
 
-    return () => {
-      mounted = false;
-      controller.abort();
-    };
-  }, [selectedDistrict]);
+  return () => {
+    mounted = false;
+    controller.abort();
+  };
+}, [selectedDistrict, selectedArea]);
+
 
   const filteredAlerts = useMemo(() => {
     let filtered = alerts.slice();
@@ -262,6 +271,10 @@ export default function Index() {
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+              <div>
+                <label className="text-sm text-muted-foreground">Area (optional)</label>
+                <Input className="mt-1" placeholder="Village/Locality" value={selectedArea} onChange={(e) => setSelectedArea(e.target.value)} />
               </div>
             </div>
 
