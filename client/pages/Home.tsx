@@ -279,7 +279,7 @@ const Home = () => {
       {/* Features Section (moved below Query Types) */}
       <section className="py-6">
         <div className="container px-4 mx-auto">
-          <div className="max-w-6xl mx-auto rounded-2xl bg-white/90 border border-gray-200 p-6 md:p-8 shadow-sm">
+          <div className="max-w-6xl mx-auto rounded-2xl bg-white/90 border border-gray-200 p-6 md:p-8 shadow-sm" style={{height: 500}}>
             <div className="text-center mb-6">
               <h2 className="text-3xl lg:text-4xl font-bold mb-3 text-foreground">Everything You Need for Modern Farming</h2>
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">Access comprehensive agricultural services designed specifically for Indian farmers</p>
