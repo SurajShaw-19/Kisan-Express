@@ -381,15 +381,10 @@ const Home = () => {
       </section>
 
       {/* CTA Section - shrink height after login */}
-      <section className={`${isAuthenticated ? 'py-6' : 'py-10 lg:py-12'} bg-gradient-to-r from-slate-600 to-slate-700 text-white`}>
+      <section style={{ backgroundImage: 'linear-gradient(to right, rgb(71,85,105), rgb(51,65,85))', color: '#fff', padding: '24px 0' }}>
         <div className="container px-4 mx-auto text-center">
-          {plantAnimation ? (
-            <FarmerAnimation className={`${isAuthenticated ? 'h-16' : 'h-28'} mx-auto mb-4`} />
-          ) : (
-            <div className={`${isAuthenticated ? 'h-16' : 'h-28'} mx-auto mb-4`} />
-          )}
-          <h2 className={`${isAuthenticated ? 'text-xl lg:text-2xl' : 'text-2xl lg:text-3xl'} font-bold mb-2 text-white`}>Ready to Transform Your Farming?</h2>
-          <p className={`${isAuthenticated ? 'text-base' : 'text-lg'} mb-6 text-white max-w-2xl mx-auto`}>Join thousands of farmers who are already benefiting from AI-powered agricultural advice.</p>
+          <h2 className="text-xl font-bold mb-2" style={{ fontSize: 24, lineHeight: '32px' }}>Ready to Transform Your Farming?</h2>
+          <p className="mb-6 text-white max-w-[672px] mx-auto" style={{ marginBottom: 24 }}>Join thousands of farmers who are already benefiting from AI-powered agricultural advice.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild className="bg-white text-slate-700 hover:bg-slate-50">
               <Link to="/query">
