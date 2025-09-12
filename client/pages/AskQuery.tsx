@@ -27,6 +27,8 @@ import { querySchema } from "@/lib/validation/schemas";
 import { useFarmerStore } from "@/store/farmerStore";
 import { z } from "zod";
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
 type QueryFormData = z.infer<typeof querySchema>;
 
 const AskQuery = () => {
@@ -101,35 +103,53 @@ const AskQuery = () => {
   };
 
   const onSubmit = async (data: QueryFormData) => {
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+  try {
+    const formData = new FormData();
+    formData.append("farmerId", profile?.id || "anonymous");
+    formData.append("type", data.type);
+    formData.append("content", data.content);
+    formData.append("category", data.category);
 
-      const queryId = Date.now().toString();
-      
-      // Add query to store
-      addQuery({
-        farmerId: profile?.id || 'anonymous',
-        type: data.type,
-        content: data.content,
-        category: data.category,
-        status: 'pending',
-        imageUrl: selectedImage ? URL.createObjectURL(selectedImage) : undefined,
-      });
-
-      toast.success('Query submitted successfully!');
-      
-      // Reset form
-      reset();
-      setSelectedImage(null);
-      setQueryType('text');
-      
-      // Navigate to advisory page
-      navigate(`/advisory/${queryId}`);
-    } catch (error) {
-      toast.error('Failed to submit query. Please try again.');
+    if (selectedImage) {
+      formData.append("image", selectedImage);
     }
-  };
+
+    // 👇 Replace with your backend URL (adjust if using Vite proxy)
+    const res = await fetch("http://localhost:5000/api/query", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!res.ok) {
+      throw new Error(`Server error: ${res.statusText}`);
+    }
+
+    const result = await res.json();
+
+    const queryId = result.id || Date.now().toString();
+
+    // Save to Zustand store
+    addQuery({
+      farmerId: profile?.id || "anonymous",
+      type: data.type,
+      content: data.content,
+      category: data.category,
+      status: "pending",
+      imageUrl: selectedImage ? URL.createObjectURL(selectedImage) : undefined,
+    });
+
+    toast.success("✅ Query submitted successfully!");
+    reset();
+    setSelectedImage(null);
+    setQueryType("text");
+
+    navigate(`/advisory/${queryId}`);
+  } catch (error) {
+    console.error(error);
+    toast.error("❌ Failed to submit query. Please try again.");
+  }
+};
+
 
   const queryTypeOptions = [
     { value: 'text', icon: MessageSquare, label: 'Text Query', description: 'Type your question' },
