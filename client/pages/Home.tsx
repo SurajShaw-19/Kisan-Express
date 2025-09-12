@@ -302,9 +302,7 @@ const Home = () => {
                             <CardDescription className="mb-3 text-sm leading-relaxed">{feature.description}</CardDescription>
                             {feature.animation ? (
                               <FarmerAnimation className="h-24 mx-auto mb-3" />
-                            ) : (
-                              <div className="h-24 mx-auto mb-3" />
-                            )}
+                            ) : null}
                             <Button variant="ghost" size="sm" asChild className="group/btn hover:bg-slate-50 transition-all">
                               <Link to={feature.href} className="inline-flex items-center justify-center gap-2 text-sm font-medium text-forest-700">
                                 Get Started
