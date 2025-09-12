@@ -173,7 +173,7 @@ const Home = () => {
   const getButtonMargin = (title: string) => {
     switch (title) {
       case "Organic Farming":
-        return 34;
+        return 24;
       case "Ask Expert Questions":
         return 1;
       case "Training Programs":
