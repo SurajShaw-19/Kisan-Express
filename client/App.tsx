@@ -24,6 +24,7 @@ const Alerts = lazy(() => import("./pages/Alerts"));
 const Schemes = lazy(() => import("./pages/Schemes"));
 const About = lazy(() => import("./pages/About"));
 const Community = lazy(() => import("./pages/Community"));
+const LocalGroups = lazy(() => import("./pages/LocalGroups"));
     const ExpertSupport = lazy(() => import("./pages/ExpertSupport"));
     const Login = lazy(() => import("./pages/Login"));
     const Signup = lazy(() => import("./pages/Signup"));
