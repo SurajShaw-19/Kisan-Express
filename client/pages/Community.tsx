@@ -26,7 +26,7 @@ const Community: React.FC = () => {
             <Card className="p-4">
               <h3 className="font-semibold mb-2">Local Groups</h3>
               <p className="text-sm text-muted-foreground mb-4">Find or create groups in your area for in-person meetups.</p>
-              <Link to="/training-programs">
+              <Link to="/local-groups">
                 <Button>Find Local Groups</Button>
               </Link>
             </Card>
