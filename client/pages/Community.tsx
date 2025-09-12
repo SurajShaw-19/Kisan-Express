@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Community: React.FC = () => {
   return (
@@ -32,9 +32,7 @@ const Community: React.FC = () => {
           </div>
 
           <div className="mt-8">
-            <Link to="/home">
-              <Button variant="outline">Back to Home</Button>
-            </Link>
+            <Button variant="outline" onClick={() => navigate(-1)}>Back</Button>
           </div>
         </div>
       </div>
