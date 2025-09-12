@@ -303,12 +303,10 @@ const Home = () => {
                             {feature.animation ? (
                               <FarmerAnimation className="h-24 mx-auto mb-3" />
                             ) : null}
-                            <Button variant="ghost" size="sm" asChild className="group/btn hover:bg-slate-50 transition-all">
-                              <Link to={feature.href} className="inline-flex items-center justify-center gap-2 text-sm font-medium text-forest-700 px-3 py-2 bg-white/90 rounded-md border border-gray-100 shadow-sm" style={{ marginTop: `${getButtonMargin(feature.title)}px` }}>
-                                Get Started
-                                <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                              </Link>
-                            </Button>
+                            <Link to={feature.href} className="inline-flex items-center justify-center gap-2 text-sm font-medium text-forest-700 px-3 py-2 bg-white/90 rounded-md border border-gray-100 shadow-sm hover:bg-white transition" style={{ marginTop: `${getButtonMargin(feature.title)}px` }}>
+                              Get Started
+                              <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                            </Link>
                           </CardContent>
                         </Card>
                       </div>
