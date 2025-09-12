@@ -102,7 +102,7 @@ const OrganicFarming: React.FC = () => {
               <article className="border rounded-xl p-4 shadow-sm bg-white">
                 <div className="flex items-start gap-3">
                   <div className="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center">
-                    <ImageIcon className="w-6 h-6 text-green-700" />
+                    <Image className="w-6 h-6 text-green-700" />
                   </div>
                   <div>
                     <h3 className="font-semibold">Crop Rotation & Diversification</h3>
