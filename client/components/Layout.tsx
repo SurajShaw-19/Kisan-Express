@@ -188,9 +188,27 @@ const Layout = ({ children }: LayoutProps) => {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/settings" className="cursor-pointer">
+                    <Link to="/settings#account" className="cursor-pointer">
                       <Settings className="w-4 h-4 mr-2" />
-                      Settings
+                      Account
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/settings#notifications" className="cursor-pointer">
+                      <Bell className="w-4 h-4 mr-2" />
+                      Notifications
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/settings#language" className="cursor-pointer">
+                      <Globe className="w-4 h-4 mr-2" />
+                      Language
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/customer-support" className="cursor-pointer">
+                      <Phone className="w-4 h-4 mr-2" />
+                      Support
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
