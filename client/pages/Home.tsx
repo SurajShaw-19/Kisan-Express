@@ -299,7 +299,7 @@ const Home = () => {
                               </div>
                               <CardTitle className="text-lg mb-2 group-hover:text-slate-700 transition-colors">{feature.title}</CardTitle>
                             </CardHeader>
-                            <CardContent className="text-center p-4" style={{ height: feature.title === 'Organic Farming' ? '162px' : undefined }}>
+                            <CardContent className="text-center p-4" style={{ height: feature.title === 'Organic Farming' ? '150px' : undefined }}>
                               <CardDescription className="mb-3 text-sm leading-relaxed">{feature.description}</CardDescription>
                               {feature.animation ? (
                                 <FarmerAnimation className="h-24 mx-auto mb-3" />
