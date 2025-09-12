@@ -170,6 +170,21 @@ const Home = () => {
     { number: "15+", label: "Languages Supported" },
   ];
 
+  const getButtonMargin = (title: string) => {
+    switch (title) {
+      case "Organic Farming":
+        return 26;
+      case "Ask Expert Questions":
+        return 1;
+      case "Training Programs":
+        return 21;
+      case "Customer Support":
+        return 16;
+      default:
+        return 0;
+    }
+  };
+
   return (
     <div className="min-h-full">
       {/* Hero Section */}
