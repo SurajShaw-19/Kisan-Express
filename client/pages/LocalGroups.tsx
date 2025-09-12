@@ -25,6 +25,104 @@ const LocalGroups: React.FC = () => {
     alert(`Connection request sent to ${name}`);
   };
 
+  const mapRef = useRef<any>(null);
+  const userMarkerRef = useRef<any>(null);
+  const selectedMarkerRef = useRef<any>(null);
+  const watchIdRef = useRef<number | null>(null);
+  const [userCoords, setUserCoords] = useState<{lat:number;lon:number} | null>(null);
+  const [leafletLoaded, setLeafletLoaded] = useState(false);
+
+  // Dynamically load Leaflet (no npm dependency)
+  useEffect(() => {
+    if ((window as any).L) { setLeafletLoaded(true); return; }
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://unpkg.com/leaflet/dist/leaflet.css';
+    document.head.appendChild(link);
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/leaflet/dist/leaflet.js';
+    script.async = true;
+    script.onload = () => setLeafletLoaded(true);
+    document.body.appendChild(script);
+    return () => {
+      // do not remove scripts to avoid breaking other pages
+    };
+  }, []);
+
+  // Initialize map once leaflet is available
+  useEffect(() => {
+    if (!leafletLoaded) return;
+    const L = (window as any).L;
+    if (!L || mapRef.current) return;
+    mapRef.current = L.map('localgroups-map', { scrollWheelZoom: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(mapRef.current);
+
+    // initial view
+    if (userCoords) {
+      mapRef.current.setView([userCoords.lat, userCoords.lon], 10);
+    } else if (selectedUser) {
+      mapRef.current.setView([selectedUser.coords.lat, selectedUser.coords.lon], 6);
+    } else {
+      mapRef.current.setView([20.5937, 78.9629], 5);
+    }
+  }, [leafletLoaded]);
+
+  // Update markers when selected user or userCoords changes
+  useEffect(() => {
+    if (!leafletLoaded || !mapRef.current) return;
+    const L = (window as any).L;
+
+    // update selected user marker
+    if (selectedMarkerRef.current) {
+      try { mapRef.current.removeLayer(selectedMarkerRef.current); } catch (e) {}
+      selectedMarkerRef.current = null;
+    }
+    if (selectedUser) {
+      selectedMarkerRef.current = L.marker([selectedUser.coords.lat, selectedUser.coords.lon]).addTo(mapRef.current).bindPopup(selectedUser.name);
+    }
+
+    // update user marker
+    if (userMarkerRef.current) {
+      try { userMarkerRef.current.setLatLng([userCoords?.lat || 0, userCoords?.lon || 0]); } catch (e) {}
+    } else if (userCoords) {
+      const userIcon = L.icon({ iconUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png', iconSize: [25, 41], iconAnchor: [12, 41] });
+      userMarkerRef.current = L.marker([userCoords.lat, userCoords.lon], { icon: userIcon }).addTo(mapRef.current).bindPopup('You');
+    }
+
+    // adjust view to fit both points if both exist
+    try {
+      const points: any[] = [];
+      if (selectedUser) points.push([selectedUser.coords.lat, selectedUser.coords.lon]);
+      if (userCoords) points.push([userCoords.lat, userCoords.lon]);
+      if (points.length === 1) {
+        mapRef.current.setView(points[0], 10);
+      } else if (points.length > 1) {
+        mapRef.current.fitBounds(points, { padding: [50, 50] });
+      }
+    } catch (err) {
+      // ignore
+    }
+  }, [leafletLoaded, selectedUser, userCoords]);
+
+  // Start geolocation watch
+  useEffect(() => {
+    if (!('geolocation' in navigator)) return;
+    const id = navigator.geolocation.watchPosition(
+      (pos) => {
+        const coords = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+        setUserCoords(coords);
+      },
+      (err) => {
+        console.warn('Geolocation error', err);
+      },
+      { enableHighAccuracy: true, maximumAge: 5000, timeout: 10000 },
+    );
+    watchIdRef.current = id;
+    return () => {
+      if (watchIdRef.current != null) navigator.geolocation.clearWatch(watchIdRef.current);
+    };
+  }, [leafletLoaded]);
+
   return (
     <div className="min-h-screen py-12 bg-gradient-to-b from-emerald-50 via-amber-50 to-yellow-50">
       <div className="container mx-auto px-4">
