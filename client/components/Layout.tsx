@@ -1,8 +1,32 @@
 import { ReactNode } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Menu, X, Sprout, MessageSquare, AlertTriangle, FileText, Users, BarChart3, LogIn, UserPlus, User, LogOut, Settings } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Menu,
+  X,
+  Sprout,
+  MessageSquare,
+  AlertTriangle,
+  FileText,
+  Users,
+  BarChart3,
+  LogIn,
+  UserPlus,
+  User,
+  LogOut,
+  Settings,
+  Bell,
+  Globe,
+  Phone,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 import { useFarmerStore } from "@/store/farmerStore";
 import { useAuthStore } from "@/store/authStore";
@@ -17,38 +41,70 @@ const Layout = ({ children }: LayoutProps) => {
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuthStore();
 
+  // language selection state (persisted in localStorage)
+  const [lang, setLang] = useState<string>(() => {
+    try {
+      return localStorage.getItem("kisan_lang") || "en";
+    } catch (e) {
+      return "en";
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("kisan_lang", lang);
+      document.documentElement.lang = lang;
+    } catch (e) {}
+  }, [lang]);
+
   // Close mobile menu when route changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location]);
 
   const navigation = [
-    { name: "Home", href: "/home", icon: Sprout, allowedRole: 'all' },
-    { name: "Ask Query", href: "/query", icon: MessageSquare, allowedRole: 'farmer' },
-    { name: "Alerts", href: "/alerts", icon: AlertTriangle, allowedRole: 'farmer' },
-    { name: "Expert Support", href: "/expert-support", icon: Users, allowedRole: 'all' },
-    { name: "Schemes", href: "/schemes", icon: FileText, allowedRole: 'all' },
-    { name: "About", href: "/about", icon: Users, allowedRole: 'all' },
+    { name: "Home", href: "/home", icon: Sprout, allowedRole: "all" },
+    {
+      name: "Ask Query",
+      href: "/query",
+      icon: MessageSquare,
+      allowedRole: "farmer",
+    },
+    {
+      name: "Alerts",
+      href: "/alerts",
+      icon: AlertTriangle,
+      allowedRole: "farmer",
+    },
+    {
+      name: "Expert Support",
+      href: "/expert-support",
+      icon: Users,
+      allowedRole: "all",
+    },
+    { name: "Schemes", href: "/schemes", icon: FileText, allowedRole: "all" },
+    { name: "About", href: "/about", icon: Users, allowedRole: "all" },
   ];
 
   // Determine which navigation items are visible based on current user role
   const visibleNavigation = navigation.filter((item) => {
     // If no authenticated user, show all links (they will be prompted to login on click)
     if (!user) return true;
-    if (user.role === 'admin') {
+    if (user.role === "admin") {
       // admins should not see farmer-only features
-      return item.allowedRole !== 'farmer';
+      return item.allowedRole !== "farmer";
     }
-    if (user.role === 'farmer') {
+    if (user.role === "farmer") {
       // farmers should not see admin-only features
-      return item.allowedRole !== 'admin';
+      return item.allowedRole !== "admin";
     }
     return true;
   });
 
   // Per-page background styles
   const pageBackgrounds: Record<string, string> = {
-    "/home": "grid-bg-green bg-grid-hero bg-gradient-to-br from-emerald-50 via-emerald-100 to-amber-50",
+    "/home":
+      "grid-bg-green bg-grid-hero bg-gradient-to-br from-emerald-50 via-emerald-100 to-amber-50",
     "/query": "bg-gradient-to-br from-white via-gray-50 to-gray-100",
     "/alerts": "bg-gradient-to-br from-white via-gray-50 to-gray-100",
     "/schemes": "bg-gradient-to-br from-white via-gray-50 to-gray-100",
@@ -65,17 +121,24 @@ const Layout = ({ children }: LayoutProps) => {
   let pageBg = pageBackgrounds[pathname] || "bg-background";
   if (!pageBackgrounds[pathname]) {
     // try simple startsWith checks for dynamic routes
-    if (pathname.startsWith('/advisory')) pageBg = 'bg-gradient-to-br from-indigo-50 via-indigo-100 to-indigo-200';
-    else if (pathname.startsWith('/alerts')) pageBg = pageBackgrounds['/alerts'];
-    else if (pathname.startsWith('/schemes')) pageBg = pageBackgrounds['/schemes'];
-    else if (pathname.startsWith('/admin')) pageBg = pageBackgrounds['/admin'];
+    if (pathname.startsWith("/advisory"))
+      pageBg = "bg-gradient-to-br from-indigo-50 via-indigo-100 to-indigo-200";
+    else if (pathname.startsWith("/alerts"))
+      pageBg = pageBackgrounds["/alerts"];
+    else if (pathname.startsWith("/schemes"))
+      pageBg = pageBackgrounds["/schemes"];
+    else if (pathname.startsWith("/admin")) pageBg = pageBackgrounds["/admin"];
   }
 
   // Footer style override for admin pages
-  const footerClass = pathname.startsWith('/admin') ? 'border-t bg-slate-900 text-white animate-slide-up' : 'border-t bg-muted/50 animate-slide-up';
+  const footerClass = pathname.startsWith("/admin")
+    ? "border-t bg-slate-900 text-white animate-slide-up"
+    : "border-t bg-muted/50 animate-slide-up";
 
   return (
-    <div className={`min-h-screen flex flex-col transition-colors duration-700 ${pageBg} animate-page-fade`}>
+    <div
+      className={`min-h-screen flex flex-col transition-colors duration-700 ${pageBg} animate-page-fade`}
+    >
       {/* Skip Link for Accessibility */}
       <a
         href="#main-content"
@@ -88,7 +151,11 @@ const Layout = ({ children }: LayoutProps) => {
       <header className="sticky top-0 z-40 w-full border-b bg-gradient-to-r from-emerald-50 via-emerald-100 to-amber-50 backdrop-blur-md supports-[backdrop-filter]:bg-white/90 shadow-sm animate-slide-down">
         <div className="container flex h-18 items-center justify-between py-2">
           {/* Enhanced Logo */}
-          <Link to="/home" state={{ animateHero: true }} className="flex flex-col items-center sm:flex-row sm:items-center sm:space-x-3 group">
+          <Link
+            to="/home"
+            state={{ animateHero: true }}
+            className="flex flex-col items-center sm:flex-row sm:items-center sm:space-x-3 group"
+          >
             <div className="rounded-xl bg-gradient-to-br from-forest-500 to-forest-600 p-3 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-105 logo-pulse">
               <Sprout className="h-7 w-7 text-white" />
             </div>
@@ -96,7 +163,9 @@ const Layout = ({ children }: LayoutProps) => {
               <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-forest-700 to-emerald-600 bg-clip-text text-transparent block">
                 Kisan Express
               </span>
-              <p className="text-xs text-muted-foreground mt-1">AI-Powered Agricultural Advisory</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                AI-Powered Agricultural Advisory
+              </p>
             </div>
           </Link>
 
@@ -105,30 +174,40 @@ const Layout = ({ children }: LayoutProps) => {
             {visibleNavigation.map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.href;
-              const requiresAuth = item.href !== '/';
+              const requiresAuth = item.href !== "/";
               return (
                 <Link
                   key={item.name}
                   to={item.href}
-                  state={item.href === '/home' ? { animateHero: true } : undefined}
+                  state={
+                    item.href === "/home" ? { animateHero: true } : undefined
+                  }
                   onClick={(e) => {
                     // If not authenticated, prompt login
                     if (!isAuthenticated && requiresAuth) {
                       e.preventDefault();
-                      navigate('/login', { state: { from: { pathname: item.href } } });
+                      navigate("/login", {
+                        state: { from: { pathname: item.href } },
+                      });
                       return;
                     }
 
                     // If authenticated but role mismatch, redirect to user's dashboard
                     if (isAuthenticated && user) {
-                      if (item.allowedRole === 'farmer' && user.role !== 'farmer') {
+                      if (
+                        item.allowedRole === "farmer" &&
+                        user.role !== "farmer"
+                      ) {
                         e.preventDefault();
-                        navigate('/admin', { replace: true });
+                        navigate("/admin", { replace: true });
                         return;
                       }
-                      if (item.allowedRole === 'admin' && user.role !== 'admin') {
+                      if (
+                        item.allowedRole === "admin" &&
+                        user.role !== "admin"
+                      ) {
                         e.preventDefault();
-                        navigate('/', { replace: true });
+                        navigate("/", { replace: true });
                         return;
                       }
                     }
@@ -136,12 +215,16 @@ const Layout = ({ children }: LayoutProps) => {
                   aria-label={item.name}
                   className={`group flex items-center justify-center px-2 py-2 rounded-lg transition-colors duration-200 ${
                     isActive
-                      ? 'bg-gradient-to-r from-forest-600 to-emerald-600 text-white shadow-lg border border-forest-700'
-                      : 'text-forest-700 hover:text-white hover:bg-gradient-to-r hover:from-forest-500 hover:to-wheat-50'
+                      ? "bg-gradient-to-r from-forest-600 to-emerald-600 text-white shadow-lg border border-forest-700"
+                      : "text-forest-700 hover:text-white hover:bg-gradient-to-r hover:from-forest-500 hover:to-wheat-50"
                   }`}
                 >
-                  <div className={`flex items-center justify-center w-10 h-10 rounded-lg nav-icon-hover ${isActive ? 'bg-gradient-to-br from-forest-700 to-emerald-600 text-white' : 'bg-gradient-to-br from-white/60 to-forest-50 text-forest-700'} transition-all`}>
-                    <Icon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-forest-700 group-hover:text-white'}`} />
+                  <div
+                    className={`flex items-center justify-center w-10 h-10 rounded-lg nav-icon-hover ${isActive ? "bg-gradient-to-br from-forest-700 to-emerald-600 text-white" : "bg-gradient-to-br from-white/60 to-forest-50 text-forest-700"} transition-all`}
+                  >
+                    <Icon
+                      className={`h-5 w-5 ${isActive ? "text-white" : "text-forest-700 group-hover:text-white"}`}
+                    />
                   </div>
 
                   {/* label appears on hover */}
@@ -155,16 +238,57 @@ const Layout = ({ children }: LayoutProps) => {
 
           {/* Enhanced User Profile & Mobile Menu Button */}
           <div className="flex items-center space-x-4">
+            {/* Language selector */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex items-center space-x-2"
+                  aria-label="Select language"
+                >
+                  <Globe className="w-4 h-4 text-forest-700" />
+                  <span className="text-sm text-forest-700">
+                    {lang === "en" ? "EN" : "മ"}
+                  </span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-44">
+                <DropdownMenuLabel>Language</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => setLang("en")}>
+                  English{" "}
+                  {lang === "en" ? (
+                    <span className="ml-2 text-forest-600">✓</span>
+                  ) : null}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setLang("ml")}>
+                  മലയാളം{" "}
+                  {lang === "ml" ? (
+                    <span className="ml-2 text-forest-600">✓</span>
+                  ) : null}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             {isAuthenticated && user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="hidden sm:flex items-center space-x-3 bg-gradient-to-r from-forest-50 to-wheat-50 px-4 py-2 rounded-xl border border-forest-100 h-auto hover:bg-gradient-to-r hover:from-forest-100 hover:to-wheat-100 transition-all card-tilt">
+                  <Button
+                    variant="ghost"
+                    className="hidden sm:flex items-center space-x-3 bg-gradient-to-r from-forest-50 to-wheat-50 px-4 py-2 rounded-xl border border-forest-100 h-auto hover:bg-gradient-to-r hover:from-forest-100 hover:to-wheat-100 transition-all card-tilt"
+                  >
                     <div className="w-8 h-8 bg-gradient-to-br from-forest-500 to-forest-600 rounded-full flex items-center justify-center">
-                      <span className="text-white text-sm font-bold">{user.firstName.charAt(0).toUpperCase()}</span>
+                      <span className="text-white text-sm font-bold">
+                        {user.firstName.charAt(0).toUpperCase()}
+                      </span>
                     </div>
                     <div className="text-left">
-                      <span className="text-sm font-medium text-forest-700 block">Welcome, {user.firstName}</span>
-                      <p className="text-xs text-muted-foreground">{user.location.district}</p>
+                      <span className="text-sm font-medium text-forest-700 block">
+                        Welcome, {user.firstName}
+                      </span>
+                      <p className="text-xs text-muted-foreground">
+                        {user.location.district}
+                      </p>
                     </div>
                   </Button>
                 </DropdownMenuTrigger>
@@ -172,11 +296,17 @@ const Layout = ({ children }: LayoutProps) => {
                   <DropdownMenuLabel>
                     <div className="flex items-center space-x-3">
                       <div className="w-10 h-10 bg-gradient-to-br from-forest-500 to-forest-600 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold">{user.firstName.charAt(0).toUpperCase()}</span>
+                        <span className="text-white font-bold">
+                          {user.firstName.charAt(0).toUpperCase()}
+                        </span>
                       </div>
                       <div>
-                        <p className="font-medium">{user.firstName} {user.lastName}</p>
-                        <p className="text-xs text-muted-foreground">{user.email}</p>
+                        <p className="font-medium">
+                          {user.firstName} {user.lastName}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {user.email}
+                        </p>
                       </div>
                     </div>
                   </DropdownMenuLabel>
@@ -188,13 +318,40 @@ const Layout = ({ children }: LayoutProps) => {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/settings" className="cursor-pointer">
+                    <Link to="/settings#account" className="cursor-pointer">
                       <Settings className="w-4 h-4 mr-2" />
-                      Settings
+                      Account
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link
+                      to="/settings#notifications"
+                      className="cursor-pointer"
+                    >
+                      <Bell className="w-4 h-4 mr-2" />
+                      Notifications
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/settings#language" className="cursor-pointer">
+                      <Globe className="w-4 h-4 mr-2" />
+                      Language
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/customer-support" className="cursor-pointer">
+                      <Phone className="w-4 h-4 mr-2" />
+                      Support
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => { logout(); navigate('/login', { replace: true }); }} className="cursor-pointer text-red-600 focus:text-red-600">
+                  <DropdownMenuItem
+                    onClick={() => {
+                      logout();
+                      navigate("/login", { replace: true });
+                    }}
+                    className="cursor-pointer text-red-600 focus:text-red-600"
+                  >
                     <LogOut className="w-4 h-4 mr-2" />
                     Logout
                   </DropdownMenuItem>
@@ -202,13 +359,22 @@ const Layout = ({ children }: LayoutProps) => {
               </DropdownMenu>
             ) : (
               <div className="hidden sm:flex items-center space-x-3">
-                <Button variant="ghost" size="sm" asChild className="text-forest-700 hover:bg-forest-50">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  asChild
+                  className="text-forest-700 hover:bg-forest-50"
+                >
                   <Link to="/login">
                     <LogIn className="w-4 h-4 mr-2" />
                     Login
                   </Link>
                 </Button>
-                <Button size="sm" asChild className="bg-gradient-to-r from-forest-600 to-emerald-600 hover:from-forest-700 hover:to-forest-800 text-white">
+                <Button
+                  size="sm"
+                  asChild
+                  className="bg-gradient-to-r from-forest-600 to-emerald-600 hover:from-forest-700 hover:to-forest-800 text-white"
+                >
                   <Link to="/signup">
                     <UserPlus className="w-4 h-4 mr-2" />
                     Sign Up
@@ -225,7 +391,11 @@ const Layout = ({ children }: LayoutProps) => {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle mobile menu"
             >
-              {isMobileMenuOpen ? <X className="h-5 w-5 text-forest-600" /> : <Menu className="h-5 w-5 text-forest-600" />}
+              {isMobileMenuOpen ? (
+                <X className="h-5 w-5 text-forest-600" />
+              ) : (
+                <Menu className="h-5 w-5 text-forest-600" />
+              )}
             </Button>
           </div>
         </div>
@@ -239,21 +409,40 @@ const Layout = ({ children }: LayoutProps) => {
                 <div className="bg-gradient-to-r from-white to-forest-50 rounded-xl p-4 mb-4 border border-forest-100">
                   <div className="flex items-center space-x-3 mb-3">
                     <div className="w-10 h-10 bg-gradient-to-br from-forest-500 to-forest-600 rounded-full flex items-center justify-center">
-                      <span className="text-white font-bold">{user.firstName.charAt(0).toUpperCase()}</span>
+                      <span className="text-white font-bold">
+                        {user.firstName.charAt(0).toUpperCase()}
+                      </span>
                     </div>
                     <div>
-                      <p className="font-medium text-forest-700">{user.firstName} {user.lastName}</p>
-                      <p className="text-xs text-muted-foreground">{user.location.district}, {user.location.state}</p>
+                      <p className="font-medium text-forest-700">
+                        {user.firstName} {user.lastName}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {user.location.district}, {user.location.state}
+                      </p>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <Button variant="outline" size="sm" asChild className="border-forest-300 text-forest-700 hover:bg-forest-50">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      asChild
+                      className="border-forest-300 text-forest-700 hover:bg-forest-50"
+                    >
                       <Link to="/profile">
                         <User className="w-4 h-4 mr-2" />
                         Profile
                       </Link>
                     </Button>
-                    <Button variant="outline" size="sm" onClick={() => { logout(); navigate('/login', { replace: true }); }} className="border-red-300 text-red-600 hover:bg-red-50">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        logout();
+                        navigate("/login", { replace: true });
+                      }}
+                      className="border-red-300 text-red-600 hover:bg-red-50"
+                    >
                       <LogOut className="w-4 h-4 mr-2" />
                       Logout
                     </Button>
@@ -265,7 +454,7 @@ const Layout = ({ children }: LayoutProps) => {
               {visibleNavigation.map((item, index) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.href;
-                const requiresAuth = item.href !== '/';
+                const requiresAuth = item.href !== "/";
                 return (
                   <Link
                     key={item.name}
@@ -274,20 +463,28 @@ const Layout = ({ children }: LayoutProps) => {
                       // not authenticated -> prompt login
                       if (!isAuthenticated && requiresAuth) {
                         e.preventDefault();
-                        navigate('/login', { state: { from: { pathname: item.href } } });
+                        navigate("/login", {
+                          state: { from: { pathname: item.href } },
+                        });
                         return;
                       }
 
                       // authenticated but role mismatch -> redirect to appropriate dashboard
                       if (isAuthenticated && user) {
-                        if (item.allowedRole === 'farmer' && user.role !== 'farmer') {
+                        if (
+                          item.allowedRole === "farmer" &&
+                          user.role !== "farmer"
+                        ) {
                           e.preventDefault();
-                          navigate('/admin', { replace: true });
+                          navigate("/admin", { replace: true });
                           return;
                         }
-                        if (item.allowedRole === 'admin' && user.role !== 'admin') {
+                        if (
+                          item.allowedRole === "admin" &&
+                          user.role !== "admin"
+                        ) {
                           e.preventDefault();
-                          navigate('/', { replace: true });
+                          navigate("/", { replace: true });
                           return;
                         }
                       }
@@ -299,10 +496,14 @@ const Layout = ({ children }: LayoutProps) => {
                     }`}
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center nav-icon-hover ${
-                      isActive ? 'bg-forest-500' : 'bg-gray-100'
-                    }`}>
-                      <Icon className={`h-4 w-4 ${isActive ? 'text-white' : 'text-gray-600'}`} />
+                    <div
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center nav-icon-hover ${
+                        isActive ? "bg-forest-500" : "bg-gray-100"
+                      }`}
+                    >
+                      <Icon
+                        className={`h-4 w-4 ${isActive ? "text-white" : "text-gray-600"}`}
+                      />
                     </div>
                     <span>{item.name}</span>
                     {isActive && (
@@ -341,27 +542,29 @@ const Layout = ({ children }: LayoutProps) => {
       </header>
 
       {/* Main Content */}
-  {isAuthenticated ? (
-    <section id="main-content" className="flex-1 relative" role="main">
-      {pathname.startsWith('/admin') && (
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 via-amber-50/40 to-slate-800/5 backdrop-blur-sm pointer-events-none" aria-hidden />
+      {isAuthenticated ? (
+        <section id="main-content" className="flex-1 relative" role="main">
+          {pathname.startsWith("/admin") && (
+            <div
+              className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 via-amber-50/40 to-slate-800/5 backdrop-blur-sm pointer-events-none"
+              aria-hidden
+            />
+          )}
+          <div className="relative z-10 animate-content-fade">{children}</div>
+        </section>
+      ) : (
+        <main id="main-content" className="flex-1 relative" role="main">
+          {pathname.startsWith("/admin") && (
+            <div
+              className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 via-amber-50/40 to-slate-800/5 backdrop-blur-sm pointer-events-none"
+              aria-hidden
+            />
+          )}
+          <div className="relative z-10 animate-content-fade">{children}</div>
+        </main>
       )}
-      <div className="relative z-10 animate-content-fade">
-        {children}
-      </div>
-    </section>
-  ) : (
-    <main id="main-content" className="flex-1 relative" role="main">
-      {pathname.startsWith('/admin') && (
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 via-amber-50/40 to-slate-800/5 backdrop-blur-sm pointer-events-none" aria-hidden />
-      )}
-      <div className="relative z-10 animate-content-fade">
-        {children}
-      </div>
-    </main>
-  )}
 
-  {/* Footer */}
+      {/* Footer */}
       <footer className={footerClass}>
         <div className="container py-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -376,15 +579,22 @@ const Layout = ({ children }: LayoutProps) => {
                 </span>
               </div>
               <p className="text-sm text-muted-foreground max-w-md">
-                AI-powered agricultural advisory system helping farmers with real-time solutions, 
-                government schemes, and expert guidance for better crop management.
+                AI-powered agricultural advisory system helping farmers with
+                real-time solutions, government schemes, and expert guidance for
+                better crop management.
               </p>
 
               {/* Trust badges */}
               <div className="flex items-center gap-3 mt-4">
-                <div className="px-3 py-2 bg-white/80 rounded-lg shadow-sm border">Govt. Approved</div>
-                <div className="px-3 py-2 bg-white/80 rounded-lg shadow-sm border">Secure</div>
-                <div className="px-3 py-2 bg-white/80 rounded-lg shadow-sm border">Trusted by Farmers</div>
+                <div className="px-3 py-2 bg-white/80 rounded-lg shadow-sm border">
+                  Govt. Approved
+                </div>
+                <div className="px-3 py-2 bg-white/80 rounded-lg shadow-sm border">
+                  Secure
+                </div>
+                <div className="px-3 py-2 bg-white/80 rounded-lg shadow-sm border">
+                  Trusted by Farmers
+                </div>
               </div>
             </div>
 
@@ -393,22 +603,34 @@ const Layout = ({ children }: LayoutProps) => {
               <h3 className="font-semibold mb-3">Quick Links</h3>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link to="/query" className="text-muted-foreground hover:text-foreground">
+                  <Link
+                    to="/query"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
                     Ask a Question
                   </Link>
                 </li>
                 <li>
-                  <Link to="/alerts" className="text-muted-foreground hover:text-foreground">
+                  <Link
+                    to="/alerts"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
                     Weather Alerts
                   </Link>
                 </li>
                 <li>
-                  <Link to="/schemes" className="text-muted-foreground hover:text-foreground">
+                  <Link
+                    to="/schemes"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
                     Government Schemes
                   </Link>
                 </li>
                 <li>
-                  <Link to="/about" className="text-muted-foreground hover:text-foreground">
+                  <Link
+                    to="/about"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
                     About Us
                   </Link>
                 </li>
@@ -432,10 +654,16 @@ const Layout = ({ children }: LayoutProps) => {
               © 2024 Kisan Express. All rights reserved.
             </p>
             <div className="flex space-x-4 mt-4 sm:mt-0">
-              <Link to="/privacy" className="text-sm text-muted-foreground hover:text-foreground">
+              <Link
+                to="/privacy"
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
                 Privacy Policy
               </Link>
-              <Link to="/terms" className="text-sm text-muted-foreground hover:text-foreground">
+              <Link
+                to="/terms"
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
                 Terms of Service
               </Link>
             </div>

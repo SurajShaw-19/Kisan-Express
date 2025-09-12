@@ -10,9 +10,21 @@ export interface AdminNotification {
   createdAt: string;
 }
 
+export interface CustomerFeedback {
+  id: string;
+  userId?: string;
+  queryId?: string;
+  queryCategory?: string;
+  queryText: string;
+  responseText?: string;
+  rating?: number; // 1-5
+  createdAt: string;
+}
+
 interface AdminState {
   users: User[];
   notifications: AdminNotification[];
+  feedback: CustomerFeedback[];
   isLoading: boolean;
 
   // user actions
@@ -20,6 +32,11 @@ interface AdminState {
   getUserById: (id: string) => User | undefined;
   deleteUser: (id: string) => Promise<boolean>;
   searchUsers: (query: string) => User[];
+
+  // feedback
+  fetchFeedback: () => CustomerFeedback[];
+  addFeedback: (fb: Omit<CustomerFeedback, 'id' | 'createdAt'>) => void;
+  deleteFeedback: (id: string) => void;
 
   // notifications
   fetchNotifications: () => AdminNotification[];
@@ -74,6 +91,31 @@ export const useAdminStore = create<AdminState>()(
             createdAt: new Date().toISOString(),
           },
         ],
+
+        // mock customer feedback entries
+        feedback: [
+          {
+            id: 'f1',
+            userId: '1002',
+            queryId: 'q100',
+            queryCategory: 'pest',
+            queryText: 'Leaves have brown spots, what to do?',
+            responseText: 'It looks like a fungal issue. Apply recommended fungicide and improve drainage.',
+            rating: 4,
+            createdAt: new Date().toISOString(),
+          },
+          {
+            id: 'f2',
+            userId: '1005',
+            queryId: 'q101',
+            queryCategory: 'weather',
+            queryText: 'Any upcoming heavy rains?',
+            responseText: 'Yes, rain expected next week; take precautions.',
+            rating: 5,
+            createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+          },
+        ],
+
         isLoading: false,
 
         fetchUsers: async () => {
@@ -83,6 +125,29 @@ export const useAdminStore = create<AdminState>()(
           const users = get().users;
           set({ isLoading: false });
           return users;
+        },
+
+        // feedback methods
+        fetchFeedback: () => {
+          return get().feedback;
+        },
+
+        addFeedback: (fb) => {
+          const newFb: CustomerFeedback = {
+            id: `f_${Date.now()}`,
+            userId: fb.userId,
+            queryId: fb.queryId,
+            queryCategory: fb.queryCategory,
+            queryText: fb.queryText,
+            responseText: fb.responseText,
+            rating: fb.rating,
+            createdAt: new Date().toISOString(),
+          };
+          set((state) => ({ feedback: [newFb, ...state.feedback] }));
+        },
+
+        deleteFeedback: (id: string) => {
+          set((state) => ({ feedback: state.feedback.filter((f) => f.id !== id) }));
         },
 
         getUserById: (id: string) => {
@@ -139,7 +204,7 @@ export const useAdminStore = create<AdminState>()(
       }),
       {
         name: 'admin-storage',
-        partialize: (state) => ({ users: state.users, notifications: state.notifications }),
+        partialize: (state) => ({ users: state.users, notifications: state.notifications, feedback: state.feedback }),
       }
     ),
     { name: 'admin-store' }

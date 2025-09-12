@@ -36,6 +36,7 @@ const AdminDashboard: React.FC = () => {
   const deleteUser = useAdminStore((s) => s.deleteUser);
   const notifications = useAdminStore((s) => s.notifications);
   const markNotificationRead = useAdminStore((s) => s.markNotificationRead);
+  const getUserById = useAdminStore((s) => s.getUserById);
 
   const queries = useFarmerStore((s) => s.queries);
 
@@ -65,6 +66,11 @@ const AdminDashboard: React.FC = () => {
   const totalFarmers = users.filter((u) => u.role === 'farmer').length;
   const totalAdmins = users.filter((u) => u.role === 'admin').length;
   const verified = users.filter((u) => u.isVerified).length;
+
+  const feedback = useAdminStore((s) => s.feedback);
+  const fetchFeedback = useAdminStore((s) => s.fetchFeedback);
+  const deleteFeedback = useAdminStore((s) => s.deleteFeedback);
+  const totalFeedback = feedback.length;
 
   // Top crops aggregation
   const topCrops = useMemo(() => {
@@ -97,11 +103,6 @@ const AdminDashboard: React.FC = () => {
         <div className="text-right">
           <p className="text-sm text-muted-foreground">Signed in as</p>
           <p className="font-semibold">{user?.firstName} {user?.lastName} {user?.adminId ? `(${user.adminId})` : ''}</p>
-          <div className="mt-3 flex justify-end gap-2">
-            <Button asChild size="sm" className="bg-emerald-600 text-white hover:bg-emerald-700">
-              <Link to="/admin/feedback">Feedback</Link>
-            </Button>
-          </div>
         </div>
       </div>
 
@@ -133,6 +134,16 @@ const AdminDashboard: React.FC = () => {
           <CardContent>
             <p className="text-2xl font-bold">{totalAdmins}</p>
             <p className="text-sm text-white/90">Total admins</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-r from-indigo-500 to-indigo-600 text-white">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2"><Users className="w-5 h-5" /> Feedback</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold">{totalFeedback}</p>
+            <p className="text-sm text-white/90">Customer feedback entries</p>
           </CardContent>
         </Card>
 
@@ -277,8 +288,56 @@ const AdminDashboard: React.FC = () => {
                     ))}
                   </div>
                 </div>
+
               </div>
             </CardContent>
+
+          <Card className="mt-4 bg-gradient-to-br from-indigo-50 to-indigo-100">
+            <CardHeader>
+              <CardTitle>Quick Actions</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-2">
+              <Button asChild>
+                <Link to="/settings">System Settings</Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="mt-4">
+            <CardHeader>
+              <CardTitle>Customer Feedback</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              {feedback.length === 0 ? (
+                <p className="text-sm text-muted-foreground">No feedback yet</p>
+              ) : (
+                feedback.slice(0,5).map((f) => {
+                  const u = getUserById(f.userId || '');
+                  return (
+                    <div key={f.id} className="p-2 border rounded-md">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="font-medium">{u ? `${u.firstName} ${u.lastName}` : 'Unknown'}</div>
+                          <div className="text-xs text-muted-foreground">{f.queryCategory} — {new Date(f.createdAt).toLocaleDateString()}</div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button size="xs" onClick={() => { /* view */ }}>View</Button>
+                          <Button size="xs" variant="destructive" onClick={() => deleteFeedback(f.id)}>Delete</Button>
+                        </div>
+                      </div>
+                      <div className="text-sm text-muted-foreground mt-2">{f.queryText}</div>
+                      <div className="text-sm mt-1">Response: <span className="font-medium">{f.responseText}</span></div>
+                    </div>
+                  );
+                })
+              )}
+              <div className="text-right mt-2">
+                <Button asChild>
+                  <Link to="/admin/feedback">View all feedback</Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
           </Card>
 
           <Card className="mt-4 bg-gradient-to-br from-indigo-50 to-indigo-100">

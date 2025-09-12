@@ -14,6 +14,9 @@ import { initMocks } from "./lib/mocks/browser";
 
 // Lazy load all pages for better performance
 const Home = lazy(() => import("./pages/Home"));
+const OrganicFarming = lazy(() => import("./pages/OrganicFarming"));
+const TrainingPrograms = lazy(() => import("./pages/TrainingPrograms"));
+const CustomerSupport = lazy(() => import("./pages/CustomerSupport"));
 const RootRedirect = lazy(() => import("./pages/RootRedirect"));
 const AskQuery = lazy(() => import("./pages/AskQuery"));
 const Advisory = lazy(() => import("./pages/Advisory"));
@@ -26,6 +29,7 @@ const About = lazy(() => import("./pages/About"));
     const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
     const AdminFeedback = lazy(() => import("./pages/AdminFeedback"));
     const UserDetail = lazy(() => import("./pages/UserDetail"));
+    const Settings = lazy(() => import("./pages/Settings"));
     const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -75,10 +79,14 @@ const App = () => {
               <Route path="/alerts" element={<Alerts />} />
               <Route path="/schemes" element={<Schemes />} />
               <Route path="/expert-support" element={<ExpertSupport />} />
+              <Route path="/organic" element={<OrganicFarming />} />
+              <Route path="/training-programs" element={<TrainingPrograms />} />
+              <Route path="/customer-support" element={<CustomerSupport />} />
               <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><AdminDashboard /></ProtectedRoute>} />
               <Route path="/admin/feedback" element={<ProtectedRoute requiredRole="admin"><AdminFeedback /></ProtectedRoute>} />
               <Route path="/users/:id" element={<ProtectedRoute requiredRole="admin"><UserDetail /></ProtectedRoute>} />
               <Route path="/about" element={<About />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="*" element={<NotFound />} />
