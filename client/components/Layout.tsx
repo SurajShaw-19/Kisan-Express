@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Menu, X, Sprout, MessageSquare, AlertTriangle, FileText, Users, BarChart3, LogIn, UserPlus, User, LogOut, Settings } from "lucide-react";
+import { Menu, X, Sprout, MessageSquare, AlertTriangle, FileText, Users, BarChart3, LogIn, UserPlus, User, LogOut, Settings, Bell, Globe, Phone } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useFarmerStore } from "@/store/farmerStore";
 import { useAuthStore } from "@/store/authStore";
