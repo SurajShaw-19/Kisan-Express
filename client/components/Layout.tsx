@@ -155,6 +155,25 @@ const Layout = ({ children }: LayoutProps) => {
 
           {/* Enhanced User Profile & Mobile Menu Button */}
           <div className="flex items-center space-x-4">
+            {/* Language selector */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="flex items-center space-x-2" aria-label="Select language">
+                  <Globe className="w-4 h-4 text-forest-700" />
+                  <span className="text-sm text-forest-700">EN</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-44">
+                <DropdownMenuLabel>Language</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => { localStorage.setItem('kisan_lang', 'en'); document.documentElement.lang = 'en'; window.location.reload(); }}>
+                  English
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => { localStorage.setItem('kisan_lang', 'ml'); document.documentElement.lang = 'ml'; window.location.reload(); }}>
+                  മലയാളം
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             {isAuthenticated && user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
