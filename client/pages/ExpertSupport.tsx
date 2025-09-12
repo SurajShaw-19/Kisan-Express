@@ -29,7 +29,11 @@ const experts: Expert[] = [
   { id: 'E002', name: 'Dr. Neha Singh', department: 'disease', bio: 'Plant pathologist specializing in fungal diseases.', fee: 349, contact: '9999999992' },
   { id: 'E003', name: 'Mr. Ramesh Patil', department: 'weather', bio: 'Meteorologist focusing on microclimate advice for farms.', fee: 199, contact: '9999999993' },
   { id: 'E004', name: 'Ms. Priya Das', department: 'fertilizer', bio: 'Soil scientist with expertise in nutrient management.', fee: 249, contact: '9999999994' },
-  { id: 'E005', name: 'Mr. Suresh Rao', department: 'general', bio: 'Senior agricultural officer providing general advisory.', fee: 149, contact: '9999999995' }
+  { id: 'E005', name: 'Mr. Suresh Rao', department: 'general', bio: 'Senior agricultural officer providing general advisory.', fee: 149, contact: '9999999995' },
+  // Government officers offering free consultations
+  { id: 'G001', name: 'Shri Vijay Deshmukh', department: 'general', bio: 'District Agricultural Officer (Government). Official advisory and support. (free)', fee: 0, contact: '1800123001' },
+  { id: 'G002', name: 'Smt. Kavita Rao', department: 'general', bio: 'State Extension Officer (Government) — supports farmer training and outreach. (free)', fee: 0, contact: '1800123002' },
+  { id: 'G003', name: 'Dr. P. Narayanan', department: 'fertilizer', bio: 'Government Soil Specialist — official soil testing & recommendations. (free)', fee: 0, contact: '1800123003' }
 ];
 
 const ExpertSupport: React.FC = () => {
@@ -52,6 +56,11 @@ const ExpertSupport: React.FC = () => {
       return;
     }
     setSelectedExpert(expert);
+    // If the expert is a government officer with fee 0, enable contact without payment
+    if (expert.fee === 0) {
+      setPaid(true);
+      return;
+    }
     setPaid(false);
   };
 
@@ -120,7 +129,11 @@ const ExpertSupport: React.FC = () => {
                       <p className="mt-2 text-sm">{exp.bio}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-xl font-bold">₹{exp.fee}</p>
+                      {exp.fee === 0 ? (
+                        <p className="text-xl font-bold text-green-600">Free (Govt)</p>
+                      ) : (
+                        <p className="text-xl font-bold">₹{exp.fee}</p>
+                      )}
                       <p className="text-xs text-muted-foreground">Per consultation</p>
                     </div>
                   </div>
@@ -144,7 +157,7 @@ const ExpertSupport: React.FC = () => {
               <CardContent>
                 <div className="mb-4">
                   <p className="text-sm">Department: {departments.find(d => d.key === selectedExpert.department)?.label}</p>
-                  <p className="text-sm">Fee: ₹{selectedExpert.fee} per consultation</p>
+                  <p className="text-sm">Fee: {selectedExpert.fee === 0 ? 'Free (Govt)' : `₹${selectedExpert.fee} per consultation`}</p>
                 </div>
 
                 {!paid ? (
