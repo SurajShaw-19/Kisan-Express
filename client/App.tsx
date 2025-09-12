@@ -29,6 +29,7 @@ const About = lazy(() => import("./pages/About"));
     const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
     const AdminFeedback = lazy(() => import("./pages/AdminFeedback"));
     const UserDetail = lazy(() => import("./pages/UserDetail"));
+    const Settings = lazy(() => import("./pages/Settings"));
     const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -85,6 +86,7 @@ const App = () => {
               <Route path="/admin/feedback" element={<ProtectedRoute requiredRole="admin"><AdminFeedback /></ProtectedRoute>} />
               <Route path="/users/:id" element={<ProtectedRoute requiredRole="admin"><UserDetail /></ProtectedRoute>} />
               <Route path="/about" element={<About />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="*" element={<NotFound />} />
