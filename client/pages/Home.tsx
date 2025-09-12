@@ -290,7 +290,7 @@ const Home = () => {
                 <div id="features-slider">
                   <div className="slider-row flex transition-transform duration-500" style={{ transform: `translateX(-${shiftPx}px)` }}>
                     {featuresOrdered.map((feature, idx) => (
-                      <div key={idx} className="flex-shrink-0 w-full md:w-1/2 lg:w-1/4 p-2">
+                      <div key={idx} className="flex-shrink-0 w-full md:w-1/2 lg:w-1/4 p-2" style={{ height: '80%' }}>
                         <Link to={feature.href} className="block no-underline" aria-label={`Open ${feature.title}`}>
                           <Card className="group hover:shadow-xl transition-all duration-300 border border-gray-100 bg-white/80 overflow-hidden rounded-lg" style={{ height: '80%' }}>
                             <CardHeader className="text-center pb-3 bg-transparent">
@@ -299,12 +299,12 @@ const Home = () => {
                               </div>
                               <CardTitle className="text-lg mb-2 group-hover:text-slate-700 transition-colors">{feature.title}</CardTitle>
                             </CardHeader>
-                            <CardContent className="text-center p-4">
+                            <CardContent className="text-center p-4" style={{ height: feature.title === 'Organic Farming' ? '162px' : undefined }}>
                               <CardDescription className="mb-3 text-sm leading-relaxed">{feature.description}</CardDescription>
                               {feature.animation ? (
                                 <FarmerAnimation className="h-24 mx-auto mb-3" />
                               ) : null}
-                              <div className="mt-3 text-sm text-forest-700 font-medium inline-flex items-center justify-center gap-2 px-3 py-2 bg-white/90 rounded-md border border-gray-100 shadow-sm">
+                              <div className="text-sm text-forest-700 font-medium inline-flex items-center justify-center gap-2 bg-white/90 rounded-md border border-gray-100 shadow-sm" style={{ marginTop: `${getButtonMargin(feature.title)}px`, padding: '8px 12px' }}>
                                 Get Started
                                 <ArrowRight className="w-4 h-4 ml-2 transition-transform" />
                               </div>
