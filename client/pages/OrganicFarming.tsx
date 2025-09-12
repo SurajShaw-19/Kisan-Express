@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Leaf, Sun, CloudRain, Seedling, BookOpen, ImageIcon } from 'lucide-react';
+import { Leaf, Sun, CloudRain, BookOpen, Image } from 'lucide-react';
 
 const OrganicFarming: React.FC = () => {
   return (
