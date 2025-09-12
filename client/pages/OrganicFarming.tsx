@@ -119,7 +119,7 @@ const OrganicFarming: React.FC = () => {
               <article className="border rounded-xl p-4 shadow-sm bg-white">
                 <div className="flex items-start gap-3">
                   <div className="w-12 h-12 rounded-lg bg-rose-100 flex items-center justify-center">
-                    <Seedling className="w-6 h-6 text-rose-700" />
+                    <Leaf className="w-6 h-6 text-rose-700" />
                   </div>
                   <div>
                     <h3 className="font-semibold">Certification & Market Access</h3>
