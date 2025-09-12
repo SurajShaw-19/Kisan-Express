@@ -124,6 +124,11 @@ const OrganicFarming: React.FC = () => {
                   <div>
                     <h3 className="font-semibold">Certification & Market Access</h3>
                     <p className="text-sm text-muted-foreground">Understand organic certification steps and access premium markets for organic produce.</p>
+                    <div className="mt-3 grid grid-cols-3 gap-2">
+                      <img src="https://cdn.builder.io/api/v1/image/assets%2F32cee0efd0ae4056920ed697c3a4ea98%2Fef753d9810aa4db0bcbda601ae3723df?format=webp&width=800" alt="certification" className="rounded-md w-full h-20 object-cover" />
+                      <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop" alt="market access" className="rounded-md w-full h-20 object-cover" />
+                      <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=800&auto=format&fit=crop" alt="organic produce" className="rounded-md w-full h-20 object-cover" />
+                    </div>
                   </div>
                 </div>
               </article>
