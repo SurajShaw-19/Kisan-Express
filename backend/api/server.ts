@@ -1,8 +1,11 @@
 import express from "express";
 import weatherRoute from "./weatherRoute.js";
-import cropSuggestRoute from "./cropSuggestRoute.js";
+import cropSuggestRoute from "./cropSuggestRoute.js"
+import queryRoute from "../routes/queryRoute.js";
 import dotenv from "dotenv";
 import cors from "cors";
+import path from "path";
+
 
 dotenv.config();
 
@@ -14,13 +17,20 @@ export function createServer() {
   app.use(cors());
 
   // Mount routes
+   app.use("/api/query", queryRoute);
   app.use("/weather", weatherRoute);
   app.use("/crop-suggest", cropSuggestRoute);
+ 
 
   // Test route
+  // app.get("/", (req, res) => {
+  //   res.send("Backend is working ✅");
+  // });
+
   app.get("/", (req, res) => {
-    res.send("Backend is working ✅");
-  });
+  res.send("Backend is working ✅");
+});
+
 
   return app;
 }
