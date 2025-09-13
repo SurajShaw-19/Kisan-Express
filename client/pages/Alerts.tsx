@@ -152,6 +152,31 @@ export default function Index() {
       // Base URL from .env
       const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
 
+      // If no backend is configured in env, skip network fetches and use local mocks
+      if (!baseUrl) {
+        // small mocked weather/crops for development
+        const mockedWeather: WeatherResponse = {
+          fetchedAt: Date.now(),
+          current: {
+            temperature_2m: 28,
+            relative_humidity_2m: 78,
+            wind_speed_10m: 8,
+            precipitation: 4,
+          },
+        } as any;
+        const mockedCrops: CropSuggestionResponse = {
+          method: "local-mock",
+          recommendations: [
+            { crop: "Rice", reasoning: "Suitable in wet season", score: 85, plantingWindow: "Now - 2 weeks" },
+            { crop: "Green Gram", reasoning: "Good short-duration pulse", score: 72 },
+          ],
+        } as any;
+        if (!mounted) return;
+        setWeather(mockedWeather);
+        setCrops(mockedCrops);
+        return;
+      }
+
       // 1) Call backend weather endpoint
       const params = new URLSearchParams({ district: selectedDistrict });
       if (selectedArea.trim()) params.set("area", selectedArea.trim());
