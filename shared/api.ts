@@ -58,3 +58,7 @@ export interface CropSuggestionResponse {
   method: string;
   rawText?: string;
 }
+
+export interface DemoResponse {
+  message: string;
+}
